@@ -1,0 +1,101 @@
+/* chart-story 2026-11-13: 5-chapter editorial layer. Monochrome ink + very pale beige; no blue/red accents.
+   No-JS / reduced motion: every explainer scene is shown as a static list (all text visible). */
+:root{--cs-ink:#1d1b18;--cs-sub:#57514a;--cs-line:#1d1b18;--cs-beige:#efe7d8;--cs-ivory:#f7f1e3;--cs-brown:#8a6849;--cs-paper:#fdfbf7}
+.cs-sec,.cs-supp{max-width:1120px;margin:0 auto;padding:clamp(56px,9vw,112px) clamp(20px,5vw,48px) clamp(40px,6vw,72px);color:var(--cs-ink)}
+.cs-chap{font:600 12px/1.4 ui-sans-serif,system-ui,sans-serif;letter-spacing:.22em;text-transform:uppercase;color:var(--cs-sub);margin:0 0 18px;padding-top:14px;border-top:1px solid var(--cs-line);max-width:1120px}
+.ps-sec>.cs-chap{margin-left:auto;margin-right:auto}
+.cs-h{font-family:"Hiragino Mincho ProN","Noto Serif JP","Songti SC",Georgia,serif;font-weight:500;font-size:clamp(26px,3.6vw,40px);line-height:1.35;letter-spacing:.01em;margin:0 0 16px;max-width:22em}
+.cs-lead{font-size:17px;line-height:1.9;color:var(--cs-sub);max-width:40em;margin:0 0 36px}
+.cs-toc{display:flex;flex-wrap:wrap;gap:10px 22px}
+.cs-toc a{color:var(--cs-ink)!important;border-bottom:1px solid var(--cs-ink);text-decoration:none;padding-bottom:2px;background:none!important}
+/* chapter 2: player + static summary side by side */
+.cs-mech-grid{display:grid;grid-template-columns:minmax(0,1.25fr) minmax(0,1fr);gap:clamp(24px,4vw,56px);align-items:start}
+.cs-summary h3{font-size:14px;letter-spacing:.12em;margin:0 0 12px;color:var(--cs-sub);font-weight:600}
+.cs-summary ol{margin:0;padding-left:1.3em;display:grid;gap:14px;font-size:15px;line-height:1.8}
+.cs-summary strong{display:block;font-weight:600}
+.cs-summary a{color:var(--cs-ink);font-size:13px}
+/* player */
+.cs-player{border:1px solid var(--cs-line);background:var(--cs-paper);padding:18px}
+.cs-ex-h{font-weight:600;font-size:15px;margin:0 0 10px;letter-spacing:.04em}
+.cs-stage{list-style:none;margin:0;padding:0;display:grid;gap:14px}
+.cs-fig{margin:0}
+.cs-svg{display:block;width:100%;height:auto;background:#fff;border:1px solid #d9cfbd}
+.cs-lab{font:500 15px/1 ui-sans-serif,system-ui,"Hiragino Sans","PingFang SC",sans-serif;fill:var(--cs-ink)}
+.cs-lab-s{font-size:13px}
+.cs-inv{fill:#fff}
+.cs-sub{font-size:17px;line-height:1.7;margin-top:10px;font-weight:500}
+.cs-n{display:inline-block;font:600 11px/1 ui-sans-serif,system-ui,sans-serif;letter-spacing:.1em;border:1px solid var(--cs-ink);padding:3px 6px;margin-right:6px;vertical-align:2px}
+.cs-src{display:block;font-size:12px;color:var(--cs-sub);font-weight:400}
+.cs-note{font-size:12px;color:var(--cs-sub);margin:12px 0 0;line-height:1.6}
+.cs-ctl{display:flex;align-items:center;gap:10px;margin-top:12px}
+.cs-ctl[hidden]{display:none}
+.cs-btn{font:600 13px/1 ui-sans-serif,system-ui,sans-serif;background:#fff;color:var(--cs-ink);border:1px solid var(--cs-ink);padding:9px 14px;cursor:pointer;border-radius:0}
+.cs-btn:hover,.cs-btn:focus-visible{background:var(--cs-ink);color:#fff}
+.cs-prog{flex:1;height:2px;background:#e3dbcc;position:relative;overflow:hidden}
+.cs-prog i{position:absolute;inset:0 auto 0 0;width:0;background:var(--cs-ink)}
+/* JS stage mode: one scene at a time */
+.cs-js .cs-stage{display:block;position:relative}
+.cs-js .cs-scene{display:none}
+.cs-js .cs-scene.is-on{display:block;animation:csIn .5s ease both}
+@keyframes csIn{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+.cs-js .cs-scene.is-on .cs-flow circle{animation:csFlow 2.4s ease-in-out infinite}
+.cs-js .cs-scene.is-on .cs-late circle{animation-delay:.6s}
+.cs-js .cs-scene.is-on .cs-arw{stroke-dasharray:400;stroke-dashoffset:400;animation:csDraw 1.2s .3s ease forwards}
+.cs-js .cs-scene.is-on .cs-arw[stroke-dasharray="5 5"]{animation:none;stroke-dashoffset:0;stroke-dasharray:5 5}
+.cs-js .cs-scene.is-on .cs-turn ellipse{animation:csTurn 3s 1s ease forwards}
+.cs-js .cs-scene.is-on .cs-fade{animation:csFade 3s 1s ease forwards}
+.cs-js .cs-scene.is-on .cs-move{animation:csMove 3s .4s ease both}
+.cs-js .cs-scene.is-on .cs-brake{animation:csFade2 1.5s ease both}
+@keyframes csFlow{0%{transform:translateX(0);opacity:.2}50%{opacity:1}100%{transform:translateX(70px);opacity:0}}
+@keyframes csDraw{to{stroke-dashoffset:0}}
+@keyframes csTurn{to{fill:#cdb595}}
+@keyframes csFade{to{opacity:.25}}
+@keyframes csFade2{from{opacity:0}to{opacity:1}}
+@keyframes csMove{from{transform:translateX(40px)}to{transform:translateX(-60px)}}
+.cs-paused .cs-scene *{animation-play-state:paused!important}
+/* chapter 3: big values + anchored arrow */
+.cs-groups .ms-value-pair{font-size:clamp(34px,4.6vw,52px)!important;font-family:Georgia,"Hiragino Mincho ProN",serif;gap:14px}
+.cs-groups .ms-value-pair strong,.cs-groups .ms-direction{color:var(--cs-ink)!important}
+.cs-groups .ms-value-pair span:first-child{color:var(--cs-sub)}
+.cs-groups .ms-result{font-size:15px!important}
+.cs-cmpnote{font-size:13px!important;line-height:1.7!important;color:var(--cs-sub)!important;max-width:30em}
+.cs-anch .psv-plot{position:relative}
+.cs-arrow{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;overflow:visible;z-index:3}
+.cs-arrow path{fill:none;stroke:var(--cs-ink);stroke-width:2}
+.cs-arrow .cs-ah{fill:var(--cs-ink);stroke:none}
+.cs-arrow circle{fill:#fff;stroke:var(--cs-ink);stroke-width:1.5}
+.cs-anch.psv-armed .cs-arrow{opacity:0}
+.cs-anch .cs-arrow{transition:opacity .4s 1.1s}
+/* pale beige bars, thin dark outlines (monochrome) */
+.cs-groups .ps-pos.ps-vert.psv-bars .ps-prow .ps-pbar,.cs-pair .zs-bar{background:var(--cs-beige)!important;box-shadow:0 0 0 1px #2a2622!important}
+.cs-groups .ps-pos.ps-vert.psv-bars .ps-prow.cmp .ps-pbar{background:#e2d6c1!important}
+.cs-groups .ps-pos.ps-vert.psv-bars .ps-prow.focus .ps-pbar,.cs-pair .zs-col.focus .zs-bar{background:var(--cs-ivory)!important;box-shadow:0 0 0 2px var(--cs-ink)!important}
+/* chapter 4: explainer LEFT, matching chart RIGHT; mobile: explainer immediately before chart */
+.cs-pair{display:grid;grid-template-columns:minmax(0,.9fr) minmax(0,1.1fr);gap:clamp(20px,3.5vw,48px);align-items:start}
+.cs-ex{position:sticky;top:76px}
+.cs-chart{min-width:0}
+/* chapter 5 */
+.cs-sample-grid{display:grid;grid-template-columns:minmax(0,.8fr) minmax(0,1.2fr);gap:40px;align-items:start}
+.cs-sample-text p{font-size:17px;line-height:1.9;margin:0 0 14px;max-width:32em}
+.cs-sample-block{padding:14px 0 4px;border-top:1px solid var(--cs-line)}
+.cs-sample-h3{font-size:15px;font-weight:600;letter-spacing:.06em;margin:0 0 6px}
+.cs-sample-ask{color:var(--cs-sub);font-size:15px!important}
+.cs-sample-media{margin:0;border:1px solid var(--cs-line);background:#fdfbf7;padding:10px}
+.cs-sample-media img{display:block;width:100%;max-width:100%;height:auto}
+.cs-sample-media figcaption{font-size:13px;line-height:1.7;color:var(--cs-sub);margin-top:8px}
+.cs-sample-media[hidden]{display:none}
+.cs-supp{padding-bottom:8px}
+.cs-supp-h{font-weight:500;font-size:20px;letter-spacing:.06em;margin:0 0 8px;padding-top:18px;border-top:1px solid var(--cs-line)}
+.cs-supp p{color:var(--cs-sub);font-size:14px;margin:0}
+@media (max-width:900px){
+ .cs-mech-grid,.cs-pair,.cs-sample-grid{grid-template-columns:1fr}
+ .cs-ex{position:static}
+ .cs-sub{font-size:16px}
+}
+@media (prefers-reduced-motion:reduce){
+ .cs-js .cs-stage{display:grid}
+ .cs-js .cs-scene{display:block}
+ .cs-scene *,.cs-anch .cs-arrow{animation:none!important;transition:none!important}
+ .cs-ctl{display:none!important}
+}
+@media print{.cs-js .cs-scene{display:block}.cs-ctl{display:none}}
