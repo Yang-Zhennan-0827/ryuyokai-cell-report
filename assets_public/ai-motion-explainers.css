@@ -1,0 +1,49 @@
+/* AI motion explainers (cell division / SASP / gene set).
+   Real square MP4 videos with live-text titles and 4-stage legends outside the video.
+   Palette: ivory/white, fine gold and gray rules, blue #2E5C8A = normal cell, crimson #861F35 = emphasis, ochre = senescent-like cell.
+   No CSS motion on the videos themselves (no wobble / Ken Burns). */
+.aime,.aime *{box-sizing:border-box}
+.aime{margin:0;min-width:0;background:#fffdf8;border:1px solid rgba(180,154,100,.55);border-radius:16px;padding:22px 22px 20px;color:#222}
+.pe-detail.lpg-detail>.aime{justify-self:stretch;width:100%;max-width:none}
+.aime-badge{display:inline-block;margin:0 0 12px;padding:3px 12px;border:1px solid #b49a64;border-radius:999px;background:#fff;color:#6b5a35;font-size:15px;line-height:1.5;letter-spacing:.03em}
+.aime .aime-title{margin:0 0 16px;font-size:24px;line-height:1.45;font-weight:700;color:#861F35}
+.aime-media{position:relative;width:100%;aspect-ratio:1/1;background:#fff;border:1px solid #e6dfd0;border-radius:12px;overflow:hidden}
+.aime-video{display:block;width:100%;height:100%;aspect-ratio:1/1;object-fit:contain;background:#fff;animation:none!important;transform:none!important}
+.aime-stages{list-style:none!important;margin:20px 0 0!important;padding:0!important;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
+.aime-stages li{display:flex;gap:12px;align-items:flex-start;min-width:0;margin:0;padding:14px 14px 12px;background:#fff;border:1px solid #e3e0da;border-top:2px solid #b49a64;border-radius:10px}
+.aime-stages li>div{min-width:0;overflow-wrap:anywhere}
+.aime-num{flex:none;display:inline-flex;align-items:center;justify-content:center;width:30px;height:30px;border-radius:50%;border:1.5px solid #2E5C8A;color:#2E5C8A;background:#EEF3F9;font:600 16px/1 Georgia,serif}
+.aime-stages b{display:block;font-size:19px;line-height:1.5;color:#1f1f1f}
+.aime-stages p{margin:4px 0 0!important;font-size:17px!important;line-height:1.7!important;color:#444}
+/* semantic keys: blue = normal cell, ochre = senescent-like cell, gold = secreted particles, gray = gene card, blue frame = comparison */
+.aime-k-o .aime-num{border-color:#9a7230;color:#7a5a22;background:#F6E9CF}
+.aime-k-p .aime-num{border-color:#b49a64;color:#7a5a22;background:#fff7e6}
+.aime-k-g .aime-num{border-color:#8a8a8a;color:#555;background:#f4f4f4}
+.aime-k-b .aime-num{border-color:#2E5C8A;color:#2E5C8A;background:#fff}
+.aime .aime-note{margin:16px 0 0;padding-left:12px;border-left:2px solid #b49a64;font-size:16px;line-height:1.7;color:#2E5C8A}
+/* experiment bridge (replaces the old cell-cycle strip) */
+.aime-bridge{grid-column:1/-1;background:#fff;border:1px solid rgba(180,154,100,.55);border-left:3px solid #861F35;border-radius:12px;padding:18px 22px}
+.pe-detail .aime-bridge .aime-bridge-head{margin:0 0 8px;font-size:20px;line-height:1.5;font-weight:700;color:#861F35}
+.pe-detail .aime-bridge p{margin:0 0 10px;font-size:18px;line-height:1.8;color:#2b2b2b;max-width:58em}
+.pe-detail .aime-bridge p:last-child{margin-bottom:0;color:#555}
+.aime-bridge b{color:#861F35}
+/* SASP wide layout inside the mechanism figure */
+.aime-wide{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:28px 36px;align-items:start;max-width:1060px;margin:24px auto 16px;background:#fffdf8}
+.aime-wide>*{min-width:0}
+.aime-wide .aime-stages{grid-template-columns:1fr;margin-top:0!important}
+.aime-wide .aime-media{max-width:540px}
+@media(max-width:760px){
+  .aime{padding:16px 14px;border-radius:12px}
+  .aime .aime-title{font-size:22px}
+  .aime-badge{font-size:16px}
+  .aime-stages{grid-template-columns:1fr;gap:12px}
+  .aime-stages b{font-size:19px}
+  .aime-stages p{font-size:18px!important}
+  .aime .aime-note{font-size:18px}
+  .aime-wide{grid-template-columns:1fr;gap:20px;margin:18px 0 12px}
+  .aime-wide .aime-media{max-width:none}
+  .aime-bridge{padding:16px 14px}
+  .pe-detail .aime-bridge p{font-size:18px}
+}
+@media(prefers-reduced-motion:reduce){.aime-video{animation:none!important;transition:none!important}}
+@media print{.aime-media{break-inside:avoid}}

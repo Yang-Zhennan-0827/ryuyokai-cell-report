@@ -1,0 +1,150 @@
+{
+ "generated_by": "products_build.py",
+ "accepted_run": "analysis_run_canonical_retry",
+ "accepted_ts": "2026-11-01T09:02:56Z",
+ "readback": "all 7 source sha256 + row counts matched accepted report",
+ "source_sha256": {
+  "axis_definitions.tsv": "3cdccf453dc87e3c922f2fe6f6d59d69311cea9677aebc2020a05a8d6e3370a8",
+  "axis_msc_ranks.tsv": "0d1b90d0a9992ee05d440c950c8838bb095757cc6809037d521eb3cf59bc01d5",
+  "axis_allcells_ranks.tsv": "8815a25aedf76125528625657035ac90f2d4fb42454d44444c88d2fdb539ecff",
+  "pseudobulk_msc_values_ranks.tsv": "6dead1a5c5e323e322221a703d71ff67caa099c2a709e429fa70317e3a80d0a7",
+  "pseudobulk_allcells_values_ranks.tsv": "3a5aa497985d20d310672be426b73a815126da4e0b761a679e4b869803c4de93",
+  "gene_contrasts_source.tsv": "a4d8cb6981d36bb18ba8968222f00369c1e639bd5634d8f507ea3681c4c36acc",
+  "single_cell_axes_wide.tsv": "5db3e76d22d061125fa304d99a7ec36143b1f6b6169cb9f4b64ceb791b224933"
+ },
+ "counts": {
+  "N_AXES": 11,
+  "N_GENE_SOURCE": 16049,
+  "N_GENE_VALUE_ROWS_EACH": 112343,
+  "N_CONTRAST_SOURCE_GENES": 11388,
+  "N_CONTRAST_SOURCE_ROWS": 68328,
+  "N_AXIS_ROWS_EACH": 77,
+  "N_SINGLE_CELLS": 49705,
+  "N_SINGLE_CELL_AXIS_POINTS": 546755
+ },
+ "web_gene_rows": 16048,
+ "web_omitted_genes": [
+  "F3"
+ ],
+ "cell_files": [
+  "cells/axis_01.json",
+  "cells/axis_02.json",
+  "cells/axis_03.json",
+  "cells/axis_04.json",
+  "cells/axis_05.json",
+  "cells/axis_06.json",
+  "cells/axis_07.json",
+  "cells/axis_08.json",
+  "cells/axis_09.json",
+  "cells/axis_10.json",
+  "cells/axis_11.json"
+ ],
+ "senmayo_cell_file": "cells/senmayo_allcells.json",
+ "senmayo_source_sha256": {
+  "senmayo_condition_summary.csv": "2f942f5a916cc728e2f6d4b727912a2169178b2afe28fa164bb31cfc735570f1",
+  "senmayo_allcell_scores.csv": "98110bc492cb507ac9c509f230e5349c08507d7d863b08ca0141e8b10d3d7baf",
+  "senmayo_msc_scores.csv": "243df5bfef739dafa85a1689041ffb6100857644b512074a02d48b81d163155c"
+ },
+ "senmayo_gated_sha256": {
+  "senmayo_msc_condition_summary.csv": "d471003293cf72625b5474ba3b269087ce9927c2a212b525c2665f3671446728",
+  "senmayo_cultured6_allcell_rank.tsv": "d6a73f6d422763d1c4477630b7a2e3a9515664d158dc2a1c40892357e3a17d6a",
+  "senmayo_cultured6_msc_rank.tsv": "d6a73f6d422763d1c4477630b7a2e3a9515664d158dc2a1c40892357e3a17d6a"
+ },
+ "senmayo_accepted_ts": "2026-11-01T09:15:04Z",
+ "downloads": [
+  {
+   "file": "downloads/axis_definitions.tsv.gz",
+   "source_name": "axis_definitions.tsv",
+   "source_sha256": "3cdccf453dc87e3c922f2fe6f6d59d69311cea9677aebc2020a05a8d6e3370a8",
+   "gz_sha256": "7ed8211104541d7f8e3870db7b4439f287802d18ab88103c4f01d40554806f65",
+   "gz_bytes": 934
+  },
+  {
+   "file": "downloads/axis_msc_ranks.tsv.gz",
+   "source_name": "axis_msc_ranks.tsv",
+   "source_sha256": "0d1b90d0a9992ee05d440c950c8838bb095757cc6809037d521eb3cf59bc01d5",
+   "gz_sha256": "244099902b7dea5ce995cbe8d150a5cae0845eec198fa2d9f457b7e1330cd278",
+   "gz_bytes": 1096
+  },
+  {
+   "file": "downloads/axis_allcells_ranks.tsv.gz",
+   "source_name": "axis_allcells_ranks.tsv",
+   "source_sha256": "8815a25aedf76125528625657035ac90f2d4fb42454d44444c88d2fdb539ecff",
+   "gz_sha256": "432d46aea04b48d27c69b5e13b29e27bd89db953f87faf78ef7beba3ebde5925",
+   "gz_bytes": 1106
+  },
+  {
+   "file": "downloads/pseudobulk_msc_values_ranks.tsv.gz",
+   "source_name": "pseudobulk_msc_values_ranks.tsv",
+   "source_sha256": "6dead1a5c5e323e322221a703d71ff67caa099c2a709e429fa70317e3a80d0a7",
+   "gz_sha256": "9d8522dcd8b3f7f48f28405ee67736315cefeee74f59fb3cd625fa9732fa58fe",
+   "gz_bytes": 974684
+  },
+  {
+   "file": "downloads/pseudobulk_allcells_values_ranks.tsv.gz",
+   "source_name": "pseudobulk_allcells_values_ranks.tsv",
+   "source_sha256": "3a5aa497985d20d310672be426b73a815126da4e0b761a679e4b869803c4de93",
+   "gz_sha256": "bcbed351ebd34e313843145f4da44e0e395805056a6494c63e1c44b01f823413",
+   "gz_bytes": 990173
+  },
+  {
+   "file": "downloads/gene_contrasts_source.tsv.gz",
+   "source_name": "gene_contrasts_source.tsv",
+   "source_sha256": "a4d8cb6981d36bb18ba8968222f00369c1e639bd5634d8f507ea3681c4c36acc",
+   "gz_sha256": "1043e021d5cd448be897817bb2a87e0aaf8fb66eee4e3fff372e0f0792616a9a",
+   "gz_bytes": 348283
+  },
+  {
+   "file": "downloads/single_cell_axes_wide_sanitized.tsv.gz",
+   "source_name": "single_cell_axes_wide.tsv (cell_id replaced by cell_index; all other columns exact)",
+   "source_sha256": "5db3e76d22d061125fa304d99a7ec36143b1f6b6169cb9f4b64ceb791b224933",
+   "sanitized": true,
+   "gz_sha256": "14302ef5ce4d19ad2907d2952b0562b87c4da6edb9002f10f563eeef0acb3e98",
+   "gz_bytes": 5242805
+  },
+  {
+   "file": "downloads/own_products_axis_ranks.tsv",
+   "source_name": "row filter of axis_msc_ranks.tsv + axis_allcells_ranks.tsv (own products only)",
+   "sha256": "dfb90dbc223710356308f70be169bf63c77cb5eef59f356951a420abc84ef1ab"
+  },
+  {
+   "file": "downloads/senmayo_msc_condition_summary.csv.gz",
+   "source_name": "senmayo_msc_condition_summary.csv",
+   "source_sha256": "d471003293cf72625b5474ba3b269087ce9927c2a212b525c2665f3671446728",
+   "gz_sha256": "26fa17e65bcb4d3dcd661fa1b4b269e4a92f34935fff94fd0788539c55613172"
+  },
+  {
+   "file": "downloads/senmayo_cultured6_allcell_rank.tsv.gz",
+   "source_name": "senmayo_cultured6_allcell_rank.tsv",
+   "source_sha256": "d6a73f6d422763d1c4477630b7a2e3a9515664d158dc2a1c40892357e3a17d6a",
+   "gz_sha256": "1ce9f76f10fe83a0b1c60de3aab8fdc91a56d001bdea4ab12de31859e63e78f6"
+  },
+  {
+   "file": "downloads/senmayo_cultured6_msc_rank.tsv.gz",
+   "source_name": "senmayo_cultured6_msc_rank.tsv",
+   "source_sha256": "d6a73f6d422763d1c4477630b7a2e3a9515664d158dc2a1c40892357e3a17d6a",
+   "gz_sha256": "1b617b988a7860f997598a09a483b7d1bb56eb0e846533f124c8911ae32fd1e1"
+  },
+  {
+   "file": "downloads/senmayo_condition_summary_allcells.csv.gz",
+   "source_name": "senmayo_condition_summary_allcells.csv",
+   "source_sha256": "2f942f5a916cc728e2f6d4b727912a2169178b2afe28fa164bb31cfc735570f1",
+   "sanitized": false,
+   "gz_sha256": "131a816724a60ec43236ff3706c314a0534bf63266dfc990964d37fc37ab3e6e"
+  },
+  {
+   "file": "downloads/senmayo_allcell_scores_sanitized.csv.gz",
+   "source_name": "senmayo_allcell_scores_sanitized.csv",
+   "source_sha256": "98110bc492cb507ac9c509f230e5349c08507d7d863b08ca0141e8b10d3d7baf",
+   "sanitized": true,
+   "gz_sha256": "5711122f4fe4c69afd3a2268501b43dada31d8bc79a8abc183c77b0a0535d994"
+  }
+ ],
+ "headline_ryuyokai_rank_low_cultured6_msc": {
+  "炎症・NF-kB": 1,
+  "細胞老化・周期（SASP含む）": 1
+ },
+ "internal_status": {
+  "senmayo125": "published from analysis_run_senmayo_retry (all-QC-cell + gated MSC summaries, cultured-6 ranks, per-cell scores); original failed run not used"
+ }
+}

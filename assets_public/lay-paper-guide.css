@@ -1,0 +1,89 @@
+/* Lay-reader explainer diagrams for paper-evidence panels (Hubackova 2012 BrdU, Saul 2022 SenMayo).
+   Conceptual illustrations only — not data. Palette: ivory/white, thin gold, blue #2E5C8A, crimson #861F35. */
+.pe-detail.lpg-detail{display:grid;grid-template-columns:minmax(0,1.08fr) minmax(0,1fr);gap:32px 36px;align-items:start;margin:30px 0}
+.pe-detail.lpg-detail>*{min-width:0}
+.pe-detail.lpg-detail>.lpg-fig{max-width:none;justify-self:stretch;width:100%}
+.lpg-fig{margin:0;background:#fffdf8;border:1px solid rgba(180,154,100,.55);border-radius:16px;padding:18px 18px 16px}
+.lpg-svg{display:block;width:100%;height:auto}
+.lpg-badge{display:inline-block;margin:0 0 14px;padding:3px 10px;border:1px solid #b49a64;border-radius:999px;font-size:14px!important;line-height:1.5!important;letter-spacing:.04em;color:#6b5a35;background:#fff}
+.lpg-badge-data{border-color:#2E5C8A;color:#2E5C8A;margin-bottom:10px}
+.lpg-scenes{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.lpg-scene{min-width:0}
+.lpg-scene-label{margin:0 0 8px;font-size:16px!important;line-height:1.5!important;font-weight:700;color:#861F35}
+.lpg-scene-ctrl .lpg-scene-label{color:#2E5C8A}
+.lpg-scene-sub{margin:6px 0 0;font-size:15px!important;line-height:1.5!important;color:#555}
+.lpg-legend{display:flex;flex-wrap:wrap;gap:6px 16px;margin-top:14px;padding-top:12px;border-top:1px solid rgba(180,154,100,.45);font-size:15px;line-height:1.5;color:#444}
+.lpg-key{display:inline-flex;align-items:center;gap:7px}
+.lpg-key::before{content:"";display:inline-block;flex:none;width:13px;height:13px;border-radius:50%}
+.lpg-key-n::before{background:#EEF3F9;border:1.6px solid #2E5C8A}
+.lpg-key-o::before{background:#F6E9CF;border:1.6px solid #B5852F}
+.lpg-key-div::before{width:18px;height:0;border-radius:0;border-top:2px solid #861F35}
+.lpg-key-dot::before{width:7px;height:7px;background:rgba(134,31,53,.45)}
+.lpg-copy h4{color:#861F35;font-size:24px;line-height:1.45;margin:0 0 14px}
+.lpg-copy>p{font-size:19px;line-height:1.85;margin:0 0 12px}
+.pe-detail.lpg-detail .lpg-term{font-size:15px;line-height:1.6;color:#666}
+.pe-detail.lpg-detail .lpg-note{font-size:16px;line-height:1.6;color:#2E5C8A;border-left:2px solid #b49a64;padding-left:12px}
+/* lifecycle strip */
+.lpg-cycle{grid-column:1/-1;border-top:1px solid rgba(180,154,100,.55);padding-top:18px}
+.pe-detail.lpg-detail .lpg-cycle-head{margin:0 0 10px;font-size:16px;line-height:1.5;font-weight:700;color:#861F35}
+.lpg-steps{list-style:none;margin:0 auto;padding:0;display:grid;grid-template-columns:minmax(0,1fr) auto minmax(0,1fr) auto minmax(0,1fr);align-items:center;gap:10px;max-width:620px}
+.lpg-steps li{text-align:center;min-width:0}
+.lpg-steps li span{display:block;margin-top:4px;font-size:16px;line-height:1.45;color:#222}
+.lpg-step-svg{max-width:120px;margin:0 auto}
+.lpg-step-arrow{color:#861F35;font-size:22px;line-height:1}
+.pe-detail.lpg-detail .lpg-cycle-note{margin:14px auto 0;max-width:620px;font-size:18px;line-height:1.75;color:#333}
+/* original figure disclosure */
+.lpg-orig{grid-column:1/-1;border:1px solid rgba(180,154,100,.55);border-radius:12px;background:#fff}
+.lpg-orig>summary{cursor:pointer;padding:14px 18px;font-size:17px;line-height:1.5;color:#2E5C8A;font-weight:700}
+.lpg-orig>summary small{display:block;font-weight:400;font-size:14px;color:#666;margin-top:2px}
+.lpg-orig>summary:focus-visible{outline:2px solid #2E5C8A;outline-offset:2px}
+.lpg-orig-body{display:grid;grid-template-columns:minmax(0,.8fr) minmax(0,1.2fr);gap:24px;padding:4px 18px 18px;align-items:start}
+.lpg-orig-body>*{min-width:0}
+.lpg-orig-fig .pe-crop{display:block;width:100%;max-width:340px;height:auto;margin:0 auto}
+.lpg-senmayo .lpg-orig-fig .pe-crop{max-width:520px}
+.lpg-orig-text p{font-size:18px;line-height:1.75}
+/* SenMayo gene-set diagram */
+.lpg-bundle{margin-bottom:16px}
+.lpg-groups{display:grid;grid-template-columns:minmax(0,1fr) minmax(96px,.62fr) minmax(0,1fr);gap:12px;align-items:center;padding-top:14px;border-top:1px solid rgba(180,154,100,.45)}
+.lpg-group{min-width:0}
+.lpg-group .lpg-scene-label{font-size:15px!important;color:#2E5C8A}
+.lpg-group-before .lpg-scene-label{color:#861F35}
+.lpg-shift{text-align:center;color:#861F35;font-size:14px;line-height:1.45;font-weight:700}
+.lpg-arrow-svg{max-width:64px;margin:0 auto 4px}
+@media(max-width:760px){
+  .pe-detail.lpg-detail{grid-template-columns:1fr;gap:22px}
+  .lpg-fig{padding:14px 12px}
+  .lpg-copy h4{font-size:22px}
+  .lpg-copy>p{font-size:18px}
+  .lpg-orig-body{grid-template-columns:1fr;padding:4px 12px 14px}
+  .lpg-steps{gap:4px}
+  .lpg-steps li span{font-size:15px}
+}
+@media(max-width:480px){
+  .lpg-scenes{grid-template-columns:1fr;gap:16px}
+  .lpg-groups{grid-template-columns:1fr}
+  .lpg-arrow-svg{transform:rotate(90deg);margin:4px auto 6px}
+}
+/* Reading-first refinement: labels stay as live text, never baked into a chart. */
+.lpg-detail,.lpg-detail *{box-sizing:border-box}
+.lpg-detail .lpg-scene-label,.lpg-detail .lpg-scene-sub,.lpg-detail .lpg-steps li span,.lpg-detail .lpg-cycle-head{font-size:18px!important;line-height:1.6!important}
+.lpg-detail .lpg-bundle>.lpg-svg{max-width:240px;margin:0 auto 14px}
+.lpg-detail .lpg-bundle p{font-size:18px;line-height:1.7;margin:8px 0;text-align:center}
+.lpg-detail .lpg-set-title{font-size:25px!important;font-weight:700;color:#861F35;line-height:1.5!important}
+.lpg-compare{display:grid;grid-template-columns:minmax(0,1fr) auto minmax(0,1fr);gap:12px;align-items:center;margin-top:20px}
+.lpg-compare>div{font-size:18px;line-height:1.6;padding:14px 10px;background:#fff;border:1px solid #D9D9D9;border-radius:10px;text-align:center;overflow-wrap:anywhere}
+.lpg-compare>span{font-size:30px;color:#2E5C8A}
+.lpg-compare-label{text-align:center;font-size:18px!important;color:#2E5C8A;margin-top:10px}
+.lpg-detail .lpg-copy{overflow-wrap:anywhere}
+.lpg-detail .lpg-copy blockquote{margin:24px 0 0;font-size:16px;line-height:1.7}
+.lpg-detail .lpg-copy blockquote p{font-size:16px;line-height:1.7}
+.lpg-detail .lpg-scenes .lpg-svg{max-width:280px;margin:auto}
+.lpg-detail .lpg-steps .lpg-svg{max-width:130px;margin:auto}
+@media(max-width:480px){
+ .lpg-detail .lpg-steps{display:flex;flex-direction:column;gap:8px}
+ .lpg-detail .lpg-step-arrow{transform:rotate(90deg)}
+ .lpg-detail .lpg-steps li:not(.lpg-step-arrow){display:grid;grid-template-columns:92px minmax(0,1fr);align-items:center;width:100%;text-align:left;gap:14px}
+ .lpg-detail .lpg-compare{grid-template-columns:1fr}
+ .lpg-detail .lpg-compare>span{transform:rotate(90deg);text-align:center}
+ .lpg-detail .lpg-set-title{font-size:23px!important}
+}

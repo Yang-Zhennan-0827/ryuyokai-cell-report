@@ -1,0 +1,234 @@
+/* Vertical score-dot chart (shared .ps-pos component, JA/EN/ZH).
+   Y = score x100 on the original fixed scale; higher = up. Loaded last. */
+.ps-pos.ps-vert{--psv-h:260px;--psv-gold:#b59a5b;--psv-line:#e8dcc2;margin:0}
+.ps-pos.ps-vert .psv-scroll{overflow-x:auto;overflow-y:hidden;-webkit-overflow-scrolling:touch;padding:14px 2px 4px;outline-offset:3px}
+.ps-pos.ps-vert .psv-scroll:focus-visible{outline:2px solid #2E5C8A}
+.ps-pos.ps-vert .psv-plot{display:grid;grid-template-columns:2.8em minmax(0,1fr) 6.6em;grid-template-areas:"ax main ref" ". . reflab";align-items:start;min-width:34em}
+/* y axis */
+.ps-pos.ps-vert .ps-pax{grid-area:ax;display:block;position:relative;height:var(--psv-h);min-height:0;margin:0;padding:0}
+.ps-pos.ps-vert .ps-pax>.ps-pn,.ps-pos.ps-vert .ps-pax>.ps-pv{display:none}
+.ps-pos.ps-vert .ps-pticks{position:absolute;inset:0;height:auto;font-size:13px;color:#6f6553;font-variant-numeric:tabular-nums}
+.ps-pos.ps-vert .ps-pticks span{position:absolute;right:8px;left:auto;transform:translateY(50%);line-height:1}
+/* columns */
+.ps-pos.ps-vert .ps-plist{grid-area:main;display:flex;margin:0;padding:0;list-style:none}
+.ps-pos.ps-vert .ps-plist.ps-refl{grid-area:ref;border-left:2px dashed #cdbb93;margin-left:10px;padding-left:4px;background:#faf6ec}
+.ps-pos.ps-vert .ps-reflab{grid-area:reflab;margin:6px 0 0 12px;font-size:12px;line-height:1.4;color:#6f6553}
+.ps-pos.ps-vert .psv-reftag{display:block;font-weight:700;letter-spacing:.06em;color:#7a6a48}
+.ps-pos.ps-vert .ps-prow,.ps-pos.ps-vert .ps-prow.ps-reference-row{position:relative;inset:auto;transform:none;left:auto;top:auto;flex:1 1 0;min-width:4.6em;width:auto;display:flex;flex-direction:column;align-items:stretch;gap:0;min-height:0;padding:0;background:none;border-radius:0}
+.ps-pos.ps-vert .ps-ptrack{order:1;position:relative;height:var(--psv-h);border:0;border-top:1px solid var(--psv-line);
+  background:linear-gradient(to top,var(--psv-line) 1px,transparent 1px) left bottom/100% calc(100% / var(--psv-steps,4)) repeat-y}
+.ps-pos.ps-vert .ps-prow.focus .ps-ptrack{background-color:rgba(46,92,138,.07)}
+.ps-pos.ps-vert .ps-p0{position:absolute;left:0;right:0;top:auto;bottom:var(--z);width:auto;height:2px;margin-bottom:-1px;background:#8a7a5c}
+.ps-pos.ps-vert .ps-pdot{position:absolute;left:50%;top:auto;bottom:var(--y);width:14px;height:14px;margin:0 0 -7px -7px;border-radius:50%;background:#bfae8f;z-index:1}
+.ps-pos.ps-vert .ps-prow.cmp .ps-pdot{background:#7B5E49}
+.ps-pos.ps-vert .ps-prow.focus .ps-pdot{background:#2E5C8A;width:18px;height:18px;margin:0 0 -9px -9px;box-shadow:0 0 0 3px #fff,0 0 0 4px #2E5C8A}
+.ps-pos.ps-vert .ps-prow.ps-reference-row .ps-pdot{background:#fff;border:2px solid #9b8a6a}
+.ps-pos.ps-vert .ps-pv{order:2;text-align:center;font-size:15px;font-weight:700;margin-top:8px;font-variant-numeric:tabular-nums;color:#3a3329}
+.ps-pos.ps-vert .ps-pn{order:3;text-align:center;font-size:13px;line-height:1.35;margin-top:2px;padding:0 3px;overflow-wrap:anywhere;color:#3a3329}
+.ps-pos.ps-vert .ps-prow.focus .ps-pn,.ps-pos.ps-vert .ps-prow.focus .ps-pv{color:#2E5C8A;font-weight:700}
+.ps-pos.ps-vert .ps-prow.ps-reference-row .ps-pn{font-style:italic;color:#6f6553}
+/* controls */
+.ps-pos.ps-vert .psv-ctl{display:flex;flex-wrap:wrap;align-items:center;gap:6px 12px;margin-top:6px;font-size:13px;color:#6f6553}
+.ps-pos.ps-vert .psv-ctl p{margin:0}
+.ps-pos.ps-vert .psv-hint{display:none;font-weight:700;color:#7a6a48}
+.ps-pos.ps-vert .psv-replay{font:inherit;font-size:14px;min-height:40px;padding:6px 14px;border:1px solid var(--psv-gold);border-radius:999px;background:#fffaf0;color:#5b4a2c;cursor:pointer}
+.ps-pos.ps-vert .psv-replay:hover{background:#f5ebd3}
+.ps-pos.ps-vert .psv-replay:focus-visible{outline:2px solid #2E5C8A;outline-offset:2px}
+@media (max-width:620px){
+  .ps-pos.ps-vert{--psv-h:230px}
+  .ps-pos.ps-vert .psv-hint{display:block}
+  .ps-pos.ps-vert .ps-pn{font-size:13px}
+}
+/* animation: JS adds .psv-armed (waiting, dots hidden) then .psv-play */
+.ps-pos.ps-vert.psv-armed .ps-pdot{opacity:0}
+.ps-pos.ps-vert.psv-play .ps-pdot{opacity:1;animation:psvDrop 1.1s cubic-bezier(.3,.7,.35,1) both;animation-delay:calc(var(--i,0) * 110ms)}
+@keyframes psvDrop{from{bottom:100%;opacity:.25}to{bottom:var(--y);opacity:1}}
+@media (prefers-reduced-motion:reduce){
+  .ps-pos.ps-vert.psv-armed .ps-pdot,.ps-pos.ps-vert.psv-play .ps-pdot{opacity:1;animation:none}
+  .ps-pos.ps-vert .psv-note,.ps-pos.ps-vert .psv-replay{display:none}
+}
+
+/* ---- 2026-11-13: true zero-based (diverging) BAR chart, SVF reference leftmost ---- */
+.ps-pos.ps-vert.psv-bars .psv-plot{grid-template-columns:2.8em 6.6em auto minmax(0,1fr);grid-template-areas:". reflab . mainlab" "ax ref div main" ". . . .";min-width:38em}
+.ps-pos.ps-vert.psv-bars .ps-reflab{grid-area:reflab;margin:0 0 6px 4px;align-self:end}
+.ps-pos.ps-vert.psv-bars .psv-mainlab{grid-area:mainlab;margin:0 0 6px 6px;align-self:end;font-size:12px;font-weight:700;letter-spacing:.04em;color:#7a6a48}
+.ps-pos.ps-vert.psv-bars .ps-plist.ps-refl{grid-area:ref;border-left:0;margin-left:0;padding-left:0}
+.ps-pos.ps-vert.psv-bars .psv-div{grid-area:div;position:relative;width:18px;height:var(--psv-h);border-left:2px dashed #cdbb93;margin-left:8px}
+.ps-pos.ps-vert.psv-bars .psv-div>span{position:absolute;top:50%;left:-1px;transform:translate(-50%,-50%) rotate(-90deg);white-space:nowrap;font-size:10.5px;color:#8a7a5c;background:#fff;padding:0 4px}
+.ps-pos.ps-vert.psv-bars .ps-plist{grid-area:main}
+/* sticky y axis while scrolling sideways */
+.ps-pos.ps-vert.psv-bars .ps-pax{position:sticky;left:0;z-index:3;background:linear-gradient(to right,#fff 85%,rgba(255,255,255,0))}
+/* zero line always visible above bars */
+.ps-pos.ps-vert.psv-bars .ps-p0{z-index:2;height:2px;background:#3a3329}
+/* the bar: rectangle from zero (--z) to value (--y) */
+.ps-pos.ps-vert.psv-bars .ps-pbar{position:absolute;left:50%;width:46%;max-width:44px;transform:translateX(-50%);bottom:var(--b);height:var(--h);min-height:1px;background:#cdb98d;border-radius:0;z-index:1;transform-origin:50% 100%}
+.ps-pos.ps-vert.psv-bars .ps-pbar.neg{transform-origin:50% 0}
+.ps-pos.ps-vert.psv-bars .ps-prow.cmp .ps-pbar{background:#8a6d4e}
+.ps-pos.ps-vert.psv-bars .ps-prow.focus .ps-pbar{background:#2E5C8A}
+.ps-pos.ps-vert.psv-bars .ps-prow.ps-reference-row .ps-pbar{background:repeating-linear-gradient(135deg,#efe6d2 0 4px,#fff 4px 8px);border:1.5px solid #9b8a6a;box-sizing:border-box}
+.ps-pos.ps-vert.psv-bars .ps-prow.ps-reference-row .ps-ptrack{background-color:#faf6ec}
+/* scroll cue: shown whenever the chart actually overflows (JS adds .psv-ovf); CSS fallback on narrow screens */
+.ps-pos.ps-vert.psv-bars.psv-ovf .psv-hint{display:block}
+/* animation (comparison only, not a time series): positive bars keep their zero
+   edge fixed while the UPPER edge comes down from the plot ceiling (not a data
+   value) to the true final value; negative bars extend from zero down to their
+   final value. The final rectangle is exactly the static server-rendered one. */
+.ps-pos.ps-vert.psv-bars.psv-armed .ps-pbar.pos{opacity:0}
+.ps-pos.ps-vert.psv-bars.psv-armed .ps-pbar.neg{transform:translateX(-50%) scaleY(0)}
+.ps-pos.ps-vert.psv-bars.psv-play .ps-pbar.pos{animation:psvFall .9s cubic-bezier(.3,.7,.35,1) both;animation-delay:calc(var(--i,0) * 90ms)}
+.ps-pos.ps-vert.psv-bars.psv-play .ps-pbar.neg{animation:psvGrow .9s cubic-bezier(.3,.7,.35,1) both;animation-delay:calc(var(--i,0) * 90ms)}
+@keyframes psvFall{from{height:calc(100% - var(--b));opacity:.3}to{height:var(--h);opacity:1}}
+@keyframes psvGrow{from{transform:translateX(-50%) scaleY(0)}to{transform:translateX(-50%) scaleY(1)}}
+@media (prefers-reduced-motion:reduce){
+  .ps-pos.ps-vert.psv-bars.psv-armed .ps-pbar,.ps-pos.ps-vert.psv-bars.psv-play .ps-pbar,
+  .ps-pos.ps-vert.psv-bars.psv-armed .ps-pbar.pos,.ps-pos.ps-vert.psv-bars.psv-armed .ps-pbar.neg,
+  .ps-pos.ps-vert.psv-bars.psv-play .ps-pbar.pos,.ps-pos.ps-vert.psv-bars.psv-play .ps-pbar.neg{transform:translateX(-50%);opacity:1;animation:none}
+}
+
+/* ---- explainer (video / diagram) placed directly above its graph ---- */
+.psx-explain{margin:14px 0 10px;padding:12px 14px;border:1px solid #e8dcc2;border-radius:10px;background:#fffaf0}
+.psx-explain .scm-fig{margin:0}
+.psx-explain .scm-video{width:100%;height:auto;display:block;border-radius:6px;background:#f2ead8}
+.psx-explain .scm-t{font-size:16px;margin:8px 0 2px}
+.psx-explain .scm-b,.psx-explain .psx-b{font-size:14px;line-height:1.55;margin:2px 0}
+.psx-explain .scm-ref{font-size:12px;margin:2px 0}
+.psx-explain .scm-note{font-size:11.5px;color:#6f6553;margin:4px 0 0}
+.psx-next{margin:10px 0 0;font-weight:700;font-size:14.5px;line-height:1.45;color:#5b4a2c}
+.psx-tag{display:inline-block;margin:0 0 6px;font-size:11.5px;letter-spacing:.06em;padding:1px 8px;border:1px solid #cdbb93;border-radius:999px;color:#7a6a48}
+.psx-flow{display:flex;flex-wrap:wrap;gap:6px 22px;margin:4px 0 6px;padding:0;list-style:none}
+.psx-flow li{position:relative;padding:6px 10px;border-radius:8px;background:#fff;border:1px solid #d9c9a4;font-size:13.5px;animation:psxPulse 3.2s ease-in-out infinite;animation-delay:calc(var(--k) * .8s)}
+.psx-flow li+li::before{content:"→";position:absolute;left:-17px;top:50%;transform:translateY(-50%);color:#b59a5b}
+@keyframes psxPulse{0%,100%{box-shadow:none}20%{box-shadow:0 0 0 3px rgba(181,154,91,.35)}}
+@media (prefers-reduced-motion:reduce){.psx-flow li{animation:none}}
+
+/* ---- 2026-11-13 fix R1/R2: IL-8 (CXCL8) vertical bars + explainer-first blocks ---- */
+.ps-vert.ir-vbars{margin:12px 0 4px;background:#fff}
+.ps-vert.ir-vbars .ps-poscap{font-weight:700;font-size:14px}
+.ps-vert.ir-vbars .ps-poscap small{display:block;font-weight:400;font-size:12px;color:#6f6553}
+.ps-vert.ir-vbars .ps-pn{font-size:12px}
+.psx-pre{display:grid;gap:12px;margin:0 0 14px}
+@media (min-width:860px){.psx-pre{grid-template-columns:1fr 1fr}}
+.psx-pre .psx-explain{margin:0}
+
+/* ---- 2026-11-13 final fix: fixed-value bar reveal (comparison, not a time series) ----
+   IDO1/RUNX2 (.ix-vbar, data-psv-anim="up"): grows upward from 0 to its true value.
+   p16 (.zs-bar, data-psv-anim="down"): upper edge comes down from the plot ceiling
+   (not a data value) to its true value. Only `height` is animated; the end state is
+   the unchanged inline (server-rendered) height. No JS / reduced motion => static. */
+[data-psv-anim].psv-armed .ix-vbar,[data-psv-anim].psv-armed .zs-bar{visibility:hidden}
+[data-psv-anim="up"].psv-play .ix-vbar{animation:psvUp .9s cubic-bezier(.3,.7,.35,1) both}
+[data-psv-anim="down"].psv-play .zs-bar{animation:psvCeil .9s cubic-bezier(.3,.7,.35,1) both}
+@keyframes psvUp{from{height:0}}
+@keyframes psvCeil{from{height:100%}}
+@media (prefers-reduced-motion:reduce){
+  [data-psv-anim].psv-armed .ix-vbar,[data-psv-anim].psv-armed .zs-bar,
+  [data-psv-anim="up"].psv-play .ix-vbar,[data-psv-anim="down"].psv-play .zs-bar{visibility:visible;animation:none}
+}
+/* IL-8 results: articles stacked full width so the 7-bar chart fits on desktop;
+   narrow screens keep the keyboard-focusable horizontal scroller (.psv-scroll). */
+.ir-split.ir-results{grid-template-columns:minmax(0,1fr)}
+
+/* ---- 2026-11-13 monochrome + ivory focal layer (design only; loaded last) ----
+   Page: white/black/grey with restrained beige-gold details.
+   Aging / senescence / inflammation / p16 charts: comparison bars pale champagne beige (r3);
+   柳葉会 bar ivory with a thin dark outline. Where the chart already animates, the 柳葉会 bar's
+   colour fades champagne -> ivory as an extra animation appended to the SAME shorthand
+   (existing name/duration/timing/delay kept verbatim). Colour only: no geometry,
+   value, scale or order change; not a depiction of any biological change.
+   Beneficial-direction charts (IDO1/RUNX2): pale warm neutrals (r3), ivory outlined focal bar,
+   no colour fade. No JS / reduced motion => final ivory immediately. */
+:root{--ryi-ink:#24211d;--ryi-sub:#5a544c;--ryi-gold:#a88a55;--ryi-brown:#7a5a3e;--ryi-brown-2:#c2a888;
+  --ryi-char:#4a4641;--ryi-grey:#c4c0b9;--ryi-ivory:#fbf6e9;--ryi-edge:0 0 0 1px #2a2622}
+/* 2026-11-13 r3 pale-beige palette (overrides the tokens above; same selectors keep working):
+   comparator = champagne beige, other conditions = paler beige, 柳葉会 = ivory with a thin charcoal
+   outline; every bar keeps a fine taupe outline so pale marks stay visible on white.
+   IDO1/RUNX2 (up) charts use the same restrained warm neutrals. Low-direction blue retired. */
+:root{--ryi-brown:#e9deca;--ryi-brown-2:#f2ebdd;--ryi-char:#ddd2c0;--ryi-grey:#efe9de;--ryi-ivory:#fbf6eb;
+  --ryi-edge:0 0 0 1.5px #3a342c;--ryi-line:0 0 0 1px #a8987c;--ryi-line-2:0 0 0 1px #c9bca4;--ryi-hl:#f8f4ed;--low:#3a342c}
+@keyframes ryiIvory{from{background-color:#e9deca}to{background-color:#fbf6eb}}
+
+/* A. shared zero-based score bars (senescence / SASP / inflammation overview, IL-8 relay) */
+.ps-pos.ps-vert.psv-bars .ps-prow .ps-pbar{background:var(--ryi-brown-2);box-shadow:var(--ryi-line-2)}
+.ps-pos.ps-vert.psv-bars .ps-prow.cmp .ps-pbar{background:var(--ryi-brown);box-shadow:var(--ryi-line)}
+.ps-pos.ps-vert.psv-bars .ps-prow.focus .ps-pbar{background:var(--ryi-ivory);box-shadow:var(--ryi-edge)}
+.ps-pos.ps-vert.psv-bars.psv-play .ps-prow.focus .ps-pbar.pos{
+  animation:psvFall .9s cubic-bezier(.3,.7,.35,1) both,ryiIvory 1.2s ease-in-out both;
+  animation-delay:calc(var(--i,0) * 90ms),calc(var(--i,0) * 90ms + .7s)}
+.ps-pos.ps-vert.psv-bars.psv-play .ps-prow.focus .ps-pbar.neg{
+  animation:psvGrow .9s cubic-bezier(.3,.7,.35,1) both,ryiIvory 1.2s ease-in-out both;
+  animation-delay:calc(var(--i,0) * 90ms),calc(var(--i,0) * 90ms + .7s)}
+.ps-pos.ps-vert .ps-prow.focus .ps-ptrack{background-color:var(--ryi-hl)}
+.ps-pos.ps-vert .ps-prow.focus .ps-pdot{background:var(--ryi-ivory);box-shadow:0 0 0 3px #fff,0 0 0 4px var(--ryi-ink)}
+.ps-pos.ps-vert .ps-prow.focus .ps-pn,.ps-pos.ps-vert .ps-prow.focus .ps-pv,
+.dir-low .ps-prow.focus .ps-pn,.dir-low .ps-prow.focus .ps-pv{color:var(--ryi-ink);font-weight:700}
+.ms-index-card .ps-prow.focus{background:#f7f3ea}
+.ps-pos.ps-vert .psv-scroll:focus-visible,.ps-pos.ps-vert .psv-replay:focus-visible{outline-color:var(--ryi-ink)}
+
+/* B. p16 / IL-8 column charts (.zs-plot); p16 keeps its ceiling->value reveal */
+.ps-chart .zs-plot .zs-col.other .zs-bar{background:var(--ryi-brown-2);box-shadow:var(--ryi-line-2)}
+.ps-chart .zs-plot .zs-col.cmp .zs-bar{background:var(--ryi-brown);box-shadow:var(--ryi-line)}
+.ps-chart .zs-plot .zs-col.focus .zs-bar{background:var(--ryi-ivory);box-shadow:var(--ryi-edge)}
+.ps-chart [data-psv-anim="down"].psv-play .zs-col.focus .zs-bar{
+  animation:psvCeil .9s cubic-bezier(.3,.7,.35,1) both,ryiIvory 1.2s ease-in-out .7s both}
+.ps-chart .zs-col.focus .zs-v,.ps-chart .zs-x.focus,.zs-col.focus .zs-v,.zs-x.focus{color:var(--ryi-ink)}
+
+/* C. p16 two-condition comparison (static bars; gold marker animation untouched) */
+.pm16-col .pm16-bar{background:var(--ryi-brown-2);box-shadow:var(--ryi-line-2)}
+.pm16-cmp .pm16-bar{background:var(--ryi-brown);box-shadow:var(--ryi-line)}
+.pm16-focus .pm16-bar{background:var(--ryi-ivory);box-shadow:var(--ryi-edge)}
+.pm16-focus .pm16-v,.pm16-xf{color:var(--ryi-ink)}
+
+/* D. continuous-SASP summary cards (static) */
+.sc-bar.sc-comparator{background:var(--ryi-brown);box-shadow:var(--ryi-line)}
+.sc-bar.sc-focus{background:var(--ryi-ivory);box-shadow:var(--ryi-edge)}
+.sc-focus b,.sc-focus-label{color:var(--ryi-ink)}
+
+/* E. dog-blood TNF before/after (static) */
+.ir-dog-bars i{background:var(--ryi-brown);box-shadow:var(--ryi-line)}
+.ir-dog-bars>div:last-child i{background:var(--ryi-ivory);box-shadow:var(--ryi-edge)}
+
+/* F. key + big-number readouts in the aging sections */
+.ms-chart-key li.focus{color:var(--ryi-ink)}
+.ms-chart-key li.focus>span{color:var(--ryi-gold)}
+.dir-low .ps-to b,.dir-low .ps-rel,.dir-low .ps-big .ps-rel,.dir-low .ps-big .ps-rel b{color:var(--ryi-ink)}
+.dir-low .ps-arrow{color:var(--ryi-gold)}
+
+/* G. beneficial-direction factors (IDO1 / RUNX2): neutral, no brown->ivory fade */
+.ix-plot .ix-col.other .ix-vbar{background:var(--ryi-grey);box-shadow:var(--ryi-line-2)}
+.ix-plot .ix-col.cmp .ix-vbar{background:var(--ryi-char);box-shadow:var(--ryi-line)}
+.ix-plot .ix-col.focus .ix-vbar{background:var(--ryi-ivory);box-shadow:var(--ryi-edge)}
+.ix-col.focus .ix-vv,.ix-x.focus .ix-xv,.ix-x.focus .ix-xn,.ix-xn.focus,
+.lp-pairtbl thead th.focus,.lp-pairtbl td.focus{color:var(--ryi-ink)}
+
+.ps-pos.ps-vert{--psv-line:#ece7de}
+.ps-pos.ps-vert .psv-plot,.ps-chart .zs-plot,.ix-plot{background-color:#fff}
+.ps-pos.ps-vert .ps-prow.cmp .ps-pdot{background:var(--ryi-brown);box-shadow:var(--ryi-line)}
+.ps-pos.ps-vert .psv-scroll:focus-visible{outline-color:var(--ryi-ink)}
+.dir-low .zm-meas,.dir-low .ps-to b,.dir-low .ps-rel{color:var(--ryi-ink)}
+.dir-low .ps-arrow{color:var(--ryi-gold)}
+
+/* reduced motion: equal-specificity overrides, final ivory immediately */
+@media (prefers-reduced-motion:reduce){
+  .ps-pos.ps-vert.psv-bars.psv-play .ps-prow.focus .ps-pbar.pos,
+  .ps-pos.ps-vert.psv-bars.psv-play .ps-prow.focus .ps-pbar.neg{transform:translateX(-50%);opacity:1;animation:none}
+  .ps-chart [data-psv-anim="down"].psv-play .zs-col.focus .zs-bar{visibility:visible;animation:none}
+}
+
+/* 2026-11-13 r3 lower-value direction cue: tall thin arrow (soft beige shaft, charcoal head) with a
+   short label, above-right of the plot and OUTSIDE it (never over bars or value labels). A reading
+   guide only ("lower on the axis = lower value"): not a connector between SVF and any condition and
+   not a before/after or treatment transition. Static final state without JS / with reduced motion;
+   on .psv-play (first reveal and every replay) the shaft draws downward once and the head travels
+   down once with it. No infinite animation. */
+.psv-dir{display:flex;justify-content:flex-end;align-items:flex-end;gap:8px;margin:4px 6px 0 auto;font-size:12.5px;line-height:1.3;font-weight:600;letter-spacing:.04em;color:#4a4339;pointer-events:none}
+.psv-dir span{padding-bottom:4px;border-bottom:1px solid #e3d9c7}
+.psv-dir-ic{flex:0 0 auto;display:block;overflow:visible}
+.psv-dir-shaft{stroke:#ddcfb6;stroke-width:3.2}
+.psv-dir-head{stroke:#3a342c;stroke-width:2}
+.ps-chart > .psv-dir{margin:0 6px 4px auto}
+@keyframes psvDirDraw{from{stroke-dasharray:52;stroke-dashoffset:52}to{stroke-dasharray:52;stroke-dashoffset:0}}
+@keyframes psvDirTravel{from{transform:translateY(-44px);opacity:0}30%{opacity:1}to{transform:translateY(0);opacity:1}}
+.ps-pos.ps-vert.psv-bars.psv-play .psv-dir-shaft,.ps-chart:has(> div [data-psv-anim="down"].psv-play) > .psv-dir .psv-dir-shaft{animation:psvDirDraw 1s cubic-bezier(.3,.7,.35,1) .1s both}
+.ps-pos.ps-vert.psv-bars.psv-play .psv-dir-head,.ps-chart:has(> div [data-psv-anim="down"].psv-play) > .psv-dir .psv-dir-head{animation:psvDirTravel 1s cubic-bezier(.3,.7,.35,1) .1s both}
+@media (prefers-reduced-motion:reduce){.ps-pos.ps-vert.psv-bars.psv-play .psv-dir-ic,.ps-pos.ps-vert.psv-bars.psv-play .psv-dir-shaft,.ps-pos.ps-vert.psv-bars.psv-play .psv-dir-head,.ps-chart:has(> div [data-psv-anim="down"].psv-play) > .psv-dir .psv-dir-shaft,.ps-chart:has(> div [data-psv-anim="down"].psv-play) > .psv-dir .psv-dir-head{animation:none}}
+@media print{.psv-dir-shaft,.psv-dir-head{animation:none}}

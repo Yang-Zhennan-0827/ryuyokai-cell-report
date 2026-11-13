@@ -1,0 +1,22 @@
+/* Original conceptual artwork; measured graphs remain native HTML/SVG. */
+.ai-sasp-visual{position:relative;max-width:1060px;margin:24px auto 12px;background:#fbf7ef;border-radius:16px;overflow:hidden}
+.ai-sasp-visual>img{display:block;width:100%;height:auto;aspect-ratio:3/2;object-fit:contain}
+.ai-sasp-labels{list-style:none!important;padding:16px 20px!important;margin:0!important;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px;background:#fff;border-top:1px solid #d9d9d9}
+.ai-sasp-labels li{display:flex;gap:9px;align-items:baseline;line-height:1.5;font-size:20px;color:#2b2b2b;min-width:0}
+.ai-sasp-labels span{color:#94783e;font-size:15px;font-variant-numeric:tabular-nums}
+.ai-sasp-arrow{position:absolute;top:27%;left:44%;width:20%;font-size:clamp(32px,6vw,72px);line-height:1;color:#861f35;text-align:center}
+.ai-sasp-scene[data-zc-state=playing] .ai-sasp-arrow{animation:ai-signal 20s linear infinite}
+.ai-sasp-scene[data-zc-state=paused] .ai-sasp-arrow{animation-play-state:paused}
+.ai-sasp-scene .zc-steps{font-size:18px}
+.ai-sasp-scene .zc-note,.ai-sasp-scene .zc-sources p{font-size:16px;line-height:1.8}
+@keyframes ai-signal{0%,15%{opacity:.25}30%,80%{opacity:1}100%{opacity:.25}}
+@media(max-width:600px){
+ .ai-sasp-visual{margin:18px 0 10px;border-radius:10px}
+ .ai-sasp-labels{padding:12px!important;gap:10px;grid-template-columns:1fr}
+ .ai-sasp-labels li{font-size:18px}
+ .ai-sasp-labels span{width:26px;flex:none}
+ .ai-sasp-arrow{top:20%;font-size:38px}
+ .ai-sasp-scene .zc-steps{display:grid;grid-template-columns:1fr;gap:14px}
+ .ai-sasp-scene .zc-note,.ai-sasp-scene .zc-sources p{font-size:16px}
+}
+@media(prefers-reduced-motion:reduce){.ai-sasp-arrow{animation:none!important;opacity:1}}

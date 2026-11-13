@@ -1,0 +1,128 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<title>製品比較ダッシュボード</title>
+<link rel="stylesheet" href="products.css">
+</head>
+<body>
+<header class="top">
+  <a id="home" class="home" href="index.html" data-t="home">← メインページへ</a>
+  <nav class="langs" aria-label="Language">
+    <button type="button" data-lang="ja" lang="ja">日本語</button>
+    <button type="button" data-lang="zh" lang="zh">中文</button>
+    <button type="button" data-lang="en" lang="en">English</button>
+  </nav>
+</header>
+<main>
+  <h1 data-t="title">製品比較ダッシュボード</h1>
+  <p class="lead" data-t="lead"></p>
+  <noscript><p class="frame" data-t="noscript">このページの表示にはJavaScriptが必要です。</p></noscript>
+
+  <section class="frame hero" id="hero" aria-labelledby="hero-h">
+    <p class="kicker" data-t="hero_k"></p>
+    <h2 id="hero-h" data-t="hero_h"></h2>
+    <div id="hero-ranks" class="hero-ranks"></div>
+    <p class="note" data-t="hero_charts"></p>
+    <div class="hero-charts">
+      <figure><figcaption id="heroCapSen"></figcaption><div id="heroSen" class="bars" role="list"></div></figure>
+      <figure><figcaption id="heroCapInf"></figcaption><div id="heroInf" class="bars" role="list"></div></figure>
+    </div>
+    <p class="note" data-t="unit"></p>
+    <p class="caveat" data-t="hero_c1"></p>
+    <p class="caveat" data-t="hero_c2"></p>
+  </section>
+
+  <section class="frame" id="compare" aria-labelledby="cmp-h">
+    <h2 id="cmp-h" data-t="cmp_h"></h2>
+    <div class="controls">
+      <label><span data-t="sel_axis"></span><select id="axisSel"></select></label>
+      <label><span data-t="sel_product"></span><select id="prodSel"></select></label>
+      <label><span data-t="sel_scope"></span><select id="scopeSel"><option value="6" data-t="scope6"></option><option value="4" data-t="scope4"></option></select></label>
+      <label><span data-t="sel_pop"></span><select id="popSel"><option value="msc" data-t="pop_msc"></option><option value="all" data-t="pop_all"></option></select></label>
+    </div>
+    <p class="note" id="scopeNote" data-t="scope4_note" hidden></p>
+    <div id="bars" class="bars" role="list"></div>
+    <p class="note"><span data-t="unit"></span> <span data-t="sorted_note"></span></p>
+    <p class="note" id="svfRef"></p>
+
+    <h3 data-t="matrix_h"></h3>
+    <p class="note" data-t="matrix_note"></p>
+    <div class="scroll-x"><table id="matrix" class="tbl"></table></div>
+  </section>
+
+  <section class="frame" id="cells" aria-labelledby="cells-h">
+    <h2 id="cells-h" data-t="cells_h"></h2>
+    <div class="controls">
+      <label><span data-t="sel_axis"></span><select id="cAxisSel"></select></label>
+      <label><span data-t="filter"></span><select id="cFilter"><option value="all" data-t="f_all"></option><option value="msc" data-t="f_msc"></option></select></label>
+      <label class="chk"><input type="checkbox" id="cColor" checked> <span data-t="color"></span></label>
+      <label class="chk"><input type="checkbox" id="cHC"> <span data-t="hc"></span></label>
+      <label class="chk"><input type="checkbox" id="cTable"> <span data-t="table"></span></label>
+    </div>
+    <p class="note" id="cSmNote" data-t="sm_cells_note" hidden></p>
+    <p class="note" id="cCount" aria-live="polite"></p>
+    <div class="legend" id="cLegend"><div class="grad" id="cGrad"></div><div class="lticks" id="cTicks"></div><p class="note" id="cLegText"></p></div>
+    <div class="plotwrap" id="plotwrap"><canvas id="cv" role="img"></canvas></div>
+    <p class="note" id="cPick" aria-live="polite" data-t="pick"></p>
+    <p class="note" data-t="jitter"></p>
+    <div id="cTableWrap" class="scroll-x" hidden><table class="tbl" id="cTab"></table></div>
+    <p class="foot" data-t="foot"></p>
+  </section>
+
+  <section class="frame" id="genes" aria-labelledby="genes-h">
+    <h2 id="genes-h" data-t="genes_h"></h2>
+    <p class="note" data-t="genes_note"></p>
+    <div class="controls">
+      <label><span data-t="search"></span><input id="gSearch" type="search" autocomplete="off" spellcheck="false"></label>
+      <label><span data-t="sel_product"></span><select id="gProd"></select></label>
+      <label><select id="gFilter"><option value="none" data-t="gf_none"></option><option value="high" data-t="gf_high"></option><option value="low" data-t="gf_low"></option></select></label>
+    </div>
+    <p class="note" id="gStatus" aria-live="polite"></p>
+    <p class="note" data-t="g_ties"></p>
+    <div class="scroll-x"><table class="tbl" id="gTab"></table></div>
+    <div class="pager"><button type="button" id="gPrev" data-t="g_prev"></button><span id="gPage"></span><button type="button" id="gNext" data-t="g_next"></button></div>
+    <div class="cdk" id="cdkn2a">
+      <h3 data-t="cdkn2a_h"></h3>
+      <p class="note" data-t="cdkn2a_note"></p>
+      <p class="note" id="cdkOrder"></p>
+    </div>
+    <dl id="gEx" class="gex"></dl>
+    <p class="note" data-t="g_omit"></p>
+  </section>
+
+  <section class="frame" id="senmayo" aria-labelledby="sm-h">
+    <h2 id="sm-h" data-t="sm_h"></h2>
+    <p data-t="sm_lead"></p>
+    <p class="caveat" data-t="sm_what"></p>
+    <p class="note" data-t="sm_pop"></p>
+    <p class="note" id="smCov"></p>
+    <div class="controls"><label><span data-t="sel_pop"></span><select id="smPop"><option value="all" data-t="pop_all"></option><option value="msc" data-t="pop_msc"></option></select></label></div>
+    <h3 data-t="sm_chart"></h3>
+    <div id="smBars" class="bars" role="list"></div>
+    <div class="scroll-x"><table class="tbl" id="smTab"></table></div>
+    <p class="note"><span data-t="sm_method"></span> <a id="smPaper" href="https://doi.org/10.1038/s41467-022-32552-1" rel="noopener" data-t="sm_paper"></a></p>
+    <p class="foot" data-t="foot"></p>
+  </section>
+
+  <p class="frame note" id="mainback"><span data-t="maker"></span> <a id="makerLink" href="index.html?lang=ja#methods-ja" data-t="maker_link"></a></p>
+
+  <details class="frame methods" id="methods">
+    <summary data-t="methods_h"></summary>
+    <p data-t="m1"></p><p data-t="m2"></p><p data-t="m3"></p><p data-t="m4"></p><p data-t="m5"></p>
+    <h3 data-t="m_def"></h3>
+    <div id="defs"></div>
+  </details>
+
+  <section class="status" id="status">
+    <h2 data-t="status_h"></h2>
+    <p data-t="status_senmayo"></p>
+    <p data-t="verified"></p>
+    <p data-t="internal"></p>
+  </section>
+</main>
+<script src="products.js"></script>
+</body>
+</html>

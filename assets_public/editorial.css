@@ -1,0 +1,69 @@
+/* Editorial layer (2026-11-13): quiet monochrome report styling.
+   Scope: body.ps-public presentation surfaces only. Loaded after ps-vertical.css.
+   No direct chart-internal selectors (.zs-*, .ps-p*, .ix-*, .pm16-v, bars, axes, ticks, widths) and no beige bar fills.
+   Indirect: --canvas:#fff also turns .zs-tab / .zs-study backgrounds (var(--canvas)) white - intentional.
+   No new fonts (local Noto Serif JP / Mincho / Songti / Georgia stacks via existing --serif), no animation, no overflow clipping. */
+body.ps-public{
+  --ed-ink:#1c1b19;--ed-text:#2b2925;--ed-sub:#5f5a51;      /* warm grey supporting text, >=6:1 on white */
+  --ed-rule:#b09a65;                                          /* muted champagne gold: hairlines only */
+  --ed-gold-ink:#7f6a3c;                                      /* darker gold for numerals/eyebrows (AA on white) */
+  --ed-ivory:#faf7f0;--ed-hair:#e7e1d4;
+  --canvas:#fff;background:#fff;color:var(--ed-text)
+}
+
+/* Display headings: serif, fluid, restrained measure */
+.ps-public .ri-title{font-family:var(--serif);font-weight:700;letter-spacing:0;color:var(--ed-ink);max-width:22em}
+.ps-public .ps-h,.ps-public .pm16-h,.ps-public .lp-display,.ps-public .ir-section h2{font-family:var(--serif);font-weight:700;color:var(--ed-ink);font-size:clamp(24px,2.4vw + 12px,36px);line-height:1.3;letter-spacing:.01em;max-width:28em;text-wrap:balance}
+.ps-public .ps-h3,.ps-public .pm16-ct{font-family:var(--serif);color:var(--ed-ink)}
+
+/* Supporting copy: readable sans, warm grey, comfortable measure */
+.ps-public .ri-lead,.ps-public .ps-lead,.ps-public .pm16-lead,.ps-public .lp-lead,.ps-public .ir-lead{color:var(--ed-sub);max-width:40em;line-height:1.8}
+.ps-public .ri-kicker,.ps-public .lp-kicker{color:var(--ed-gold-ink);letter-spacing:.12em}
+
+/* Sections: generous consistent spacing, single thin gold hairline */
+.ps-public .ps-sec{border-top:1px solid var(--ed-rule);padding-top:clamp(36px,6vw,72px);padding-bottom:clamp(28px,4.5vw,56px)}
+.ps-public .ps-sec:first-child{border-top:0}
+.ps-public .ps-ref{border-top:1px solid var(--ed-rule)}
+
+/* Gold serif numerals (existing numbered lists only; no generated numbers) */
+.ps-public .aime-num,.ps-public .points .num{font-family:var(--serif);color:var(--ed-gold-ink);font-weight:400}
+
+/* Hero diptych: clean rectangular artwork, whole image, no filter/crop */
+.ps-public .ri-dip-media,.ps-public .ri-dip-media img{border-radius:0}
+.ps-public .ri-dip-media{box-shadow:none;background:#fff}
+.ps-public .ri-dip-cap{border-top:1px solid var(--ed-rule)}
+.ps-public .ri-dip-senescent{border-top-color:#9a7a58}  /* keep semantic brown cue */
+.ps-public .ri-concept{border-radius:0;background:var(--ed-ivory);border-color:var(--ed-hair)}
+
+/* Presentation surfaces: fewer rounded boxes/shadows, thin rules instead */
+.ps-public .psx-explain{border-radius:0;border:0;border-left:1px solid var(--ed-rule);background:var(--ed-ivory)}
+.ps-public .psx-explain .scm-video,.ps-public .scm-video{border-radius:0}
+.ps-public .pm16-fig{border-radius:0;border-color:var(--ed-hair)}
+.ps-public .pm16-card{border-radius:0;background:var(--ed-ivory);border-top:1px solid var(--ed-rule)}
+.ps-public .pe-paper{border-radius:0;border-color:var(--ed-hair)}
+.ps-public .pe-takeaway{background:var(--ed-ivory);border-left:1px solid var(--ed-rule)}
+.ps-public .pe-local{border-radius:0;background:var(--ed-ivory)}
+.ps-public .zc-panel{border-radius:0;background:#fff;border-color:var(--ed-hair)}
+.ps-public .zc-steps li{border-radius:0;background:var(--ed-ivory)}
+
+/* Source/evidence tables: thin rules, pale ivory header, dark readable numbers */
+.ps-public .lp-pairtbl thead th{background:var(--ed-ivory);border-bottom:1px solid var(--ed-rule);color:var(--ed-sub)}
+.ps-public .lp-pairtbl th,.ps-public .lp-pairtbl td{border-bottom-color:var(--ed-hair)}
+.ps-public .lp-pairtbl td{color:var(--ed-ink)}                 /* intentional: cells incl. td.focus/.lp-pa charcoal (weight 600 kept) */
+.ps-public .lp-pairtbl thead th.focus{color:var(--ed-ink)}     /* focus header charcoal too; weight/size/background kept */
+
+/* Controls keep real affordances: visible border, >=44px targets, legible text */
+.ps-public .ri-cta,.ps-public .ps-cta{border-radius:2px;min-height:44px}
+.ps-public .ri-intro a.ri-cta{border-radius:2px}                /* beats inline .ri-intro a.ri-cta pill */
+.ps-public .ps-cta{display:inline-flex;align-items:center;border-color:var(--ed-ink)}
+.ps-public .ir-section button,.ps-public .ir-section select,.ps-public .zc-controls button{border-radius:2px;min-height:44px}
+.ps-public .seg button[aria-pressed=true],.ps-public .seg button[aria-selected=true]{background:var(--ed-ink);color:#fff}
+.ps-public .tb-links a:hover{border-bottom-color:var(--ed-ink)}
+
+/* Palette remainder: former crimson label -> charcoal */
+.ps-public .takeaway span{background:var(--ed-ink);color:#fff}
+
+@media (max-width:640px){
+  .ps-public .ps-sec{padding-top:32px;padding-bottom:26px}
+  .ps-public .ri-title{max-width:none}
+}

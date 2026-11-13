@@ -1,0 +1,52 @@
+/* p16 side-by-side chart + 3 basics cards (2026-11-13). Page palette only: ink #171717, grey #666/#8C8C8C, rules #ddd,
+   beige-gold #B39A68 accent, 柳葉会 = #861F35 (same data accent as the existing charts). Fixed linear 0–60% axis from 0.
+   Final state is the default (no JS needed); .pm16-run only animates the comparison marker, never the bars. */
+.pm16{max-width:880px;margin:72px auto;padding:0 20px}
+.pm16-kicker{margin:0 0 8px;font-size:13px;letter-spacing:.06em;color:#7A6640}
+.pm16-h{margin:0 0 14px;font-size:clamp(26px,3.6vw,38px);line-height:1.25;color:#171717;letter-spacing:-.01em}
+.pm16-lead{margin:0 0 28px;max-width:680px;font-size:17px;line-height:1.8;color:#333}
+.pm16-fig{margin:0 0 18px;padding:22px 20px 16px;border:1px solid #E6E1D6;border-radius:6px;background:#fff;max-width:520px}
+.pm16-tag{display:inline-block;margin:0 0 14px;padding:3px 10px;border:1px solid #B39A68;border-radius:12px;font-size:12px;color:#7A6640;background:#F6F4EF}
+.pm16-area{display:grid;grid-template-columns:44px 1fr;gap:8px;height:240px}
+.pm16-yax{position:relative;font-size:12px;color:#666}.pm16-yax span{position:absolute;right:4px;transform:translateY(50%)}
+.pm16-plot{position:relative;display:grid;grid-template-columns:1fr 1fr;gap:18%;padding:0 12%;border-left:1px solid #171717}
+.pm16-grid{position:absolute;inset:0}.pm16-grid i{position:absolute;left:0;right:0;border-top:1px solid #ddd}.pm16-grid i:first-child{border-top-color:#171717}
+.pm16-col{position:relative;height:100%}
+.pm16-bar{position:absolute;left:0;right:0;bottom:0;display:block;background:#8C8C8C;transform-origin:50% 100%}
+.pm16-focus .pm16-bar{background:#861F35}
+.pm16-v{position:absolute;left:50%;transform:translate(-50%,-4px);margin-bottom:0;font-size:18px;font-weight:700;color:#171717;white-space:nowrap}
+.pm16-focus .pm16-v{color:#861F35}
+.pm16-x{display:grid;grid-template-columns:1fr 1fr;gap:18%;padding:8px 12% 0 calc(44px + 8px + 12%);font-size:14px;color:#171717;text-align:center}
+.pm16-x small{display:block;font-size:11px;color:#666}.pm16-xf{color:#861F35;font-weight:600}
+.pm16-cap{margin-top:12px;font-size:13px;line-height:1.6;color:#555}
+.pm16-ctl{display:flex;gap:10px;margin:0 0 30px}.pm16-ctl[hidden]{display:none}
+.pm16-ctl button{font:inherit;font-size:14px;padding:7px 16px;border:1px solid #171717;border-radius:3px;background:#fff;color:#171717;cursor:pointer}
+.pm16-ctl button:hover{background:#F6F4EF}.pm16-ctl button:focus-visible,.pm16-refs summary:focus-visible,.pm16-refs a:focus-visible{outline:3px solid #861F35;outline-offset:3px}
+.pm16-ct{margin:8px 0 12px;font-size:20px;color:#171717}
+.pm16-cards{list-style:none;margin:0 0 18px;padding:0;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}
+.pm16-card{margin:0;padding:16px 18px;background:#F6F4EF;border-top:2px solid #B39A68;border-radius:0 0 4px 4px;min-width:0;overflow-wrap:anywhere}
+.pm16-card h3{margin:0 0 6px;font-size:16px;color:#171717}.pm16-card p{margin:0;font-size:14px;line-height:1.7;color:#444}
+.pm16-refs summary{cursor:pointer;font-size:14px;color:#7A6640}.pm16-refs ul{margin:8px 0;padding-left:20px;font-size:13px;color:#444}
+.pm16-refs li{margin:0 0 8px}.pm16-refs li span{display:block}.pm16-refs a{color:#7A6640}
+/* comparison marker (pass 2): bars never animate and always show measured heights. A gold dashed connector + arrowhead
+   runs from the comparator bar top (--from) down to the 柳葉会 bar top (--to); both values come from the static bar styles. */
+.pm16-mk{position:absolute;inset:0;pointer-events:none;z-index:1}
+.pm16-mk i,.pm16-mk b{position:absolute}
+.pm16-mk-top{left:12%;right:50%;bottom:var(--from);border-top:2px dashed #7A6640}
+.pm16-mk-bot{left:50%;right:12%;bottom:var(--to);border-top:2px dashed #7A6640}
+.pm16-mk-line{left:50%;margin-left:-1px;bottom:var(--to);height:calc(var(--from) - var(--to));border-left:2px dashed #7A6640;transform-origin:50% 0}
+.pm16-mk-head{left:50%;bottom:var(--to);width:0;height:0;margin-left:-6px;border-left:6px solid transparent;border-right:6px solid transparent;border-top:9px solid #7A6640}
+.pm16-mk-lab{left:calc(50% + 8px);bottom:calc((var(--from) + var(--to)) / 2);max-width:40%;font-size:12px;line-height:1.3;font-weight:600;color:#7A6640;background:#fff;padding:0 3px}
+.pm16-key{margin:12px 0 0;font-size:13px;line-height:1.6;color:#444}.pm16-key i{display:inline-block;width:22px;margin:0 6px 3px 0;border-top:2px dashed #7A6640;vertical-align:middle}
+/* motion: only the marker moves, top → down, once per trigger; no bar or value changes */
+@keyframes pm16-fade{from{opacity:0}to{opacity:1}}
+@keyframes pm16-draw{from{transform:scaleY(0)}to{transform:scaleY(1)}}
+@keyframes pm16-travel{from{bottom:var(--from)}to{bottom:var(--to)}}
+.pm16-run .pm16-mk-top{animation:pm16-fade .3s ease-out both}
+.pm16-run .pm16-mk-line{animation:pm16-draw 1.6s cubic-bezier(.4,0,.2,1) .4s both}
+.pm16-run .pm16-mk-head{animation:pm16-travel 1.6s cubic-bezier(.4,0,.2,1) .4s both}
+.pm16-run .pm16-mk-bot,.pm16-run .pm16-mk-lab{animation:pm16-fade .4s ease-out 2s both}
+.pm16-paused .pm16-mk i,.pm16-paused .pm16-mk b{animation-play-state:paused}
+@media (prefers-reduced-motion:reduce){.pm16-run .pm16-mk i,.pm16-run .pm16-mk b{animation:none}}
+@media (max-width:760px){.pm16{margin:56px auto}.pm16-cards{grid-template-columns:1fr;gap:10px}.pm16-area{height:200px}.pm16-fig{padding:16px 12px 12px}}
+@media print{.pm16-ctl{display:none}.pm16-run .pm16-mk i,.pm16-run .pm16-mk b{animation:none}.pm16-card,.pm16-fig{break-inside:avoid}}
