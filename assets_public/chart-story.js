@@ -1,9 +1,9 @@
 /* chart-story 2026-11-13
    1) Timed explainer players (4 scenes x 5 s): play/pause/replay. Plays once when visible; stops on last scene.
       No JS or reduced motion => all scenes stay visible as a static list.
-   2) Group-result arrow: drawn from the TOP of the selected comparator bar (.cmp) to the TOP of the
-      Ryuyokai bar (.focus), measured from the existing server-rendered bar geometry (--b/--h). For negative
-      bars the value end is the lower edge. No values are computed or changed. */
+   2) Group-result arrow (wide-charts 2026-11-13): dashed, from the pre-culture SVF reference bar tip to the
+      Ryuyokai bar tip (.focus) across the separator; labelled as two distinct samples. Measured from the existing
+      server-rendered bar geometry (--b/--h). No values are computed or changed. */
 (function () {
   'use strict';
   var mq = window.matchMedia ? window.matchMedia('(prefers-reduced-motion: reduce)') : { matches: false };
@@ -61,37 +61,57 @@
   function onMq() { players.forEach(function (x) { x.enable(); }); draw(); }
   if (mq.addEventListener) mq.addEventListener('change', onMq); else if (mq.addListener) mq.addListener(onMq);
 
-  /* ---- anchored arrows ---- */
+  /* ---- anchored arrows ----
+     Group charts with a pre-culture SVF reference bar: thin dashed arrow from the SVF reference bar tip
+     (.ps-reference-row, left of the separator) to the Ryuyokai bar tip (.focus). It compares two DISTINCT
+     samples (label text comes from the page: .cs-arrlab); it is not a before/after change. Charts without a
+     reference row fall back to the selected six-culture comparator (.ps-prow.cmp). Geometry is read from the
+     server-rendered bars (--b/--h); for negative bars the value end is the lower edge. No values computed. */
   var NS = 'http://www.w3.org/2000/svg';
   function pct(el, v) { var x = parseFloat(getComputedStyle(el).getPropertyValue(v)); return isNaN(x) ? 0 : x / 100; }
   function endPoint(row, plotRect) {
     var tr = row.querySelector('.ps-ptrack'), b = row.querySelector('.ps-pbar');
     if (!tr || !b) return null;
     var r = tr.getBoundingClientRect(); if (!r.height) return null;
-    var y = b.classList.contains('neg') ? r.bottom - pct(b, '--b') * r.height
-                                         : r.bottom - (pct(b, '--b') + pct(b, '--h')) * r.height;
-    return { x: r.left + r.width / 2 - plotRect.left, y: y - plotRect.top };
+    var neg = b.classList.contains('neg');
+    var y = neg ? r.bottom - pct(b, '--b') * r.height
+                : r.bottom - (pct(b, '--b') + pct(b, '--h')) * r.height;
+    var bw = b.getBoundingClientRect().width || 0;
+    return { x: r.left + r.width / 2 - plotRect.left, y: y - plotRect.top, neg: neg, hw: bw / 2 };
   }
+  function el(n, a) { var e = document.createElementNS(NS, n); for (var k in a) e.setAttribute(k, a[k]); return e; }
   function draw() {
     [].slice.call(document.querySelectorAll('figure.cs-anch')).forEach(function (fig) {
       var plot = fig.querySelector('.psv-plot'); if (!plot) return;
       var old = plot.querySelector('.cs-arrow'); if (old) old.remove();
+      var lab = plot.querySelector('.cs-arrlab'); if (lab) lab.classList.remove('is-on');
       var pr = plot.getBoundingClientRect(); if (!pr.width) return;
-      var a = fig.querySelector('.ps-prow.cmp'), z = fig.querySelector('.ps-prow.focus');
+      var a = fig.querySelector('.ps-reference-row') || fig.querySelector('.ps-prow.cmp'), z = fig.querySelector('.ps-prow.focus');
       if (!a || !z) return;
       var p1 = endPoint(a, pr), p2 = endPoint(z, pr); if (!p1 || !p2) return;
-      var s = document.createElementNS(NS, 'svg'); s.setAttribute('class', 'cs-arrow'); s.setAttribute('aria-hidden', 'true');
-      s.setAttribute('viewBox', '0 0 ' + pr.width + ' ' + pr.height);
-      var dx = p2.x - p1.x, dy = p2.y - p1.y, len = Math.sqrt(dx * dx + dy * dy) || 1, ux = dx / len, uy = dy / len;
-      var hx = p2.x - ux * 4, hy = p2.y - uy * 4, k = 11;
-      var path = document.createElementNS(NS, 'path');
-      path.setAttribute('d', 'M' + p1.x + ' ' + p1.y + 'L' + (hx - ux * k) + ' ' + (hy - uy * k));
-      var head = document.createElementNS(NS, 'path'); head.setAttribute('class', 'cs-ah');
-      head.setAttribute('d', 'M' + hx + ' ' + hy + 'L' + (hx - ux * k - uy * 6) + ' ' + (hy - uy * k + ux * 6) + 'L' + (hx - ux * k + uy * 6) + ' ' + (hy - uy * k - ux * 6) + 'Z');
-      var dot = document.createElementNS(NS, 'circle'); dot.setAttribute('cx', p1.x); dot.setAttribute('cy', p1.y); dot.setAttribute('r', 4);
+      var s = el('svg', { 'class': 'cs-arrow', 'aria-hidden': 'true', viewBox: '0 0 ' + pr.width + ' ' + pr.height });
+      // start just above the reference bar tip; end at the Ryuyokai bar tip (beside it when the bar is negative,
+      // so the arrow never runs through the bar body). Curve rises over the cultured bars, then comes down.
+      var x1 = p1.x, y1 = p1.y - 6, x2, y2, cx, cy;
+      if (p2.neg) { x2 = p2.x + p2.hw + 5; y2 = p2.y; cx = x2 + 22; }
+      else { x2 = p2.x; y2 = p2.y - 6; cx = x2; }
+      cy = Math.min(y1, y2) - 4;
+      var path = el('path', { 'class': 'cs-ap', d: 'M' + x1 + ' ' + y1 + 'Q' + cx + ' ' + cy + ' ' + x2 + ' ' + y2 });
+      var ux = x2 - cx, uy = y2 - cy, len = Math.sqrt(ux * ux + uy * uy) || 1; ux /= len; uy /= len;
+      var k = 9, w = 4.5;
+      var head = el('path', { 'class': 'cs-ah', d: 'M' + (x2 - ux * k - uy * w) + ' ' + (y2 - uy * k + ux * w) + 'L' + x2 + ' ' + y2 + 'L' + (x2 - ux * k + uy * w) + ' ' + (y2 - uy * k - ux * w) });
+      var dot = el('circle', { cx: x1, cy: y1 + 6, r: 3 });
       s.appendChild(path); s.appendChild(head); s.appendChild(dot);
       s.setAttribute('data-cs-from', a.getAttribute('data-ps-cond')); s.setAttribute('data-cs-to', z.getAttribute('data-ps-cond'));
       plot.appendChild(s);
+      if (lab && a.classList.contains('ps-reference-row')) {
+        // label sits above the curve at its midpoint (t = .5), clamped inside the plot box
+        var mx = (x1 + 2 * cx + x2) / 4, my = (y1 + 2 * cy + y2) / 4;
+        lab.classList.add('is-on');
+        var lw = lab.offsetWidth, lh = lab.offsetHeight;
+        lab.style.left = Math.max(0, Math.min(pr.width - lw, mx - lw / 2)) + 'px';
+        lab.style.top = Math.max(0, my - lh - 6) + 'px';
+      }
     });
   }
   var rt; function later() { clearTimeout(rt); rt = setTimeout(draw, 120); }
@@ -99,4 +119,10 @@
   new MutationObserver(later).observe(document.documentElement, { attributes: true, attributeFilter: ['data-lang'] });
   if (document.readyState === 'complete') draw(); else window.addEventListener('load', draw);
   draw();
+})();
+/* optional SASP clip: pause when its disclosure is collapsed so nothing plays hidden */
+(function () {
+  document.querySelectorAll('details.cs-vid').forEach(function (d) {
+    d.addEventListener('toggle', function () { if (!d.open) d.querySelectorAll('video').forEach(function (v) { v.pause(); }); });
+  });
 })();

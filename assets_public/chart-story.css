@@ -61,9 +61,9 @@
 .cs-cmpnote{font-size:13px!important;line-height:1.7!important;color:var(--cs-sub)!important;max-width:30em}
 .cs-anch .psv-plot{position:relative}
 .cs-arrow{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;overflow:visible;z-index:3}
-.cs-arrow path{fill:none;stroke:var(--cs-ink);stroke-width:2}
-.cs-arrow .cs-ah{fill:var(--cs-ink);stroke:none}
-.cs-arrow circle{fill:#fff;stroke:var(--cs-ink);stroke-width:1.5}
+.cs-arrow path{fill:none;stroke:var(--cs-ink);stroke-width:1.3;stroke-linecap:round;stroke-linejoin:round}
+.cs-arrow .cs-ap{stroke-dasharray:5 4}
+.cs-arrow circle{fill:#fff;stroke:var(--cs-ink);stroke-width:1.3}
 .cs-anch.psv-armed .cs-arrow{opacity:0}
 .cs-anch .cs-arrow{transition:opacity .4s 1.1s}
 /* pale beige bars, thin dark outlines (monochrome) */
@@ -71,7 +71,7 @@
 .cs-groups .ps-pos.ps-vert.psv-bars .ps-prow.cmp .ps-pbar{background:#e2d6c1!important}
 .cs-groups .ps-pos.ps-vert.psv-bars .ps-prow.focus .ps-pbar,.cs-pair .zs-col.focus .zs-bar{background:var(--cs-ivory)!important;box-shadow:0 0 0 2px var(--cs-ink)!important}
 /* chapter 4: explainer LEFT, matching chart RIGHT; mobile: explainer immediately before chart */
-.cs-pair{display:grid;grid-template-columns:minmax(0,.9fr) minmax(0,1.1fr);gap:clamp(20px,3.5vw,48px);align-items:start}
+.cs-pair{display:grid;grid-template-columns:minmax(0,32fr) minmax(0,68fr);gap:clamp(20px,3vw,44px);align-items:start}
 .cs-ex{position:sticky;top:76px}
 .cs-chart{min-width:0}
 /* chapter 5 */
@@ -99,3 +99,106 @@
  .cs-ctl{display:none!important}
 }
 @media print{.cs-js .cs-scene{display:block}.cs-ctl{display:none}}
+
+/* ===== wide charts (2026-11-13): wider chart column (~68%), names under bars, value readout at top right ===== */
+@media (min-width:1200px){
+ .ps-public .ps-sec.ps-inf,.ps-public .ps-sec.ps-sen,.ps-public .ms-overview.cs-groups{width:min(1360px,calc(100vw - 64px));max-width:none;margin-left:calc(50% - min(680px,50vw - 32px));margin-right:0;box-sizing:border-box}
+}
+/* chapter 4 individual charts: hide 01..06 numbers + detached key (kept in DOM; plot aria-label lists every name) */
+.cs-pair .ms-chart-number,.cs-pair .ms-chart-key{display:none!important}
+/* readout hierarchy (r3, explicit user request: Ryuyokai value + relative % BIG at upper right). The chart column is a size
+   container; the readout wraps (never a rigid nowrap row) and sits beside the measure label only when the column is wide. */
+.cs-pair .cs-chart{container:cs-ch/inline-size}
+.cs-pair .ms-individual-grid{display:grid;grid-template-columns:minmax(0,1fr);grid-template-areas:"meas" "big" "fig" "lim";gap:8px 24px;align-items:end;border:1px solid #e3dbcc;background:#fff;padding:18px 20px 14px}
+.cs-pair .ps-result{display:contents}
+.cs-pair .ms-individual-figure{grid-area:fig;min-width:0}
+.cs-pair .ps-result .ps-measure{grid-area:meas;min-width:0;margin:0;font-size:13px;line-height:1.5;color:var(--cs-sub);align-self:start}
+.cs-pair .ps-result .ps-measure small{display:block;font-size:15px;font-weight:600;color:var(--cs-ink)}
+.cs-pair .ps-result .ps-big{grid-area:big;min-width:0;justify-self:stretch;align-self:start;display:flex;flex-wrap:wrap;justify-content:flex-end;align-items:flex-end;gap:6px 14px;margin:0;text-align:right}
+.cs-pair .ps-big .ps-from,.cs-pair .ps-big .ps-to{display:flex;flex-direction:column;align-items:flex-end;min-width:0}
+.cs-pair .ps-big small{order:-1;margin:0 0 2px;font-size:12px;line-height:1.35;color:var(--cs-sub)}
+.cs-pair .ps-big b{line-height:1.05;letter-spacing:-.01em}
+.cs-pair .ps-big .ps-from b{font-size:clamp(22px,3.2cqi,28px);color:var(--cs-sub)}
+.cs-pair .ps-big .ps-to b{font-size:clamp(48px,8cqi,64px);font-weight:800;color:var(--cs-ink)}
+.cs-pair .ps-big .ps-arrow{color:var(--cs-ink);font-size:22px;align-self:center}
+.cs-pair .ps-big .ps-rel{display:flex;flex-direction:column;align-items:flex-end;min-width:0;max-width:100%;margin:0 0 2px;padding-left:14px;border-left:1px solid #d9cfbd;line-height:1.1;white-space:normal}
+.cs-pair .ps-big .ps-rel b{font-size:clamp(32px,5.6cqi,44px);font-weight:800;color:var(--cs-ink);white-space:normal;overflow-wrap:normal}
+.cs-pair .ps-big .ps-rel small{order:0;margin:4px 0 0;font-size:12px}
+@container cs-ch (min-width:760px){
+ .cs-pair .ms-individual-grid{grid-template-columns:minmax(10em,1fr) minmax(0,max-content);grid-template-areas:"meas big" "fig fig" "lim lim"}
+}
+.cs-pair .ps-result .ps-limit{grid-area:lim;margin:4px 0 0;font-size:12.5px;line-height:1.6;color:var(--cs-sub)}
+.cs-pair .ps-chart .zs-plotwrap{--zs-h:300px;margin-top:14px}
+.cs-pair .ps-chart .zs-x .lbf{display:block}
+.cs-pair .ps-chart .zs-x .lbc{display:none}
+.cs-pair .ps-chart .zs-x{font-size:13.5px;line-height:1.3;letter-spacing:0;color:var(--cs-sub);padding:8px 3px 0;overflow:visible}
+.cs-pair .ps-chart .zs-x.focus{color:var(--cs-ink);font-weight:700}
+.cs-pair .zs-arrow{border-left-color:var(--cs-ink)!important}
+.cs-pair .zs-arrow::after{border-top-color:var(--cs-ink)!important}
+/* chapter 3 group charts: explainer left, chart right with the existing big value pair at its top right */
+.cs-groups .ms-card-grid.cs-wide{display:grid;grid-template-columns:minmax(0,32fr) minmax(0,68fr);gap:clamp(20px,3vw,44px);align-items:start}
+.cs-wide .cs-gleft{min-width:0}
+.cs-wide .cs-gleft .ms-explanation{margin-top:14px;border:0;padding:0}
+.cs-wide .cs-gchart{min-width:0}
+.cs-chead{display:flex;justify-content:space-between;align-items:flex-start;gap:12px 24px;margin:0 0 8px}
+.cs-chead .ms-read{margin:0;max-width:30em;font-size:13px;line-height:1.6;color:var(--cs-sub)}
+.cs-vp{text-align:right;flex:none}
+.cs-vp-lab{margin:0 0 2px;font-size:12px;line-height:1.4;color:var(--cs-sub)}
+.cs-groups .cs-vp .ms-value-pair{display:flex;justify-content:flex-end;align-items:baseline;margin:0;font-size:clamp(28px,2.8vw,40px)!important;line-height:1.1}
+.cs-groups .cs-vp .ms-value-pair span:first-child{font-size:.55em}
+.cs-arrlab{display:none;position:absolute;z-index:4;font:500 12px/1.3 ui-sans-serif,system-ui,"Hiragino Sans","PingFang SC",sans-serif;color:var(--cs-ink);background:rgba(255,255,255,.92);padding:1px 5px;white-space:nowrap;pointer-events:none}
+.cs-arrlab.is-on{display:block}
+.cs-anch.psv-armed .cs-arrlab{opacity:0}
+.cs-anch .cs-arrlab{transition:opacity .4s 1.1s}
+@media (min-width:901px){
+ .fp-chapter .fp-pair{grid-template-columns:minmax(0,34fr) minmax(0,66fr)}
+}
+@media (max-width:900px){
+ .cs-groups .ms-card-grid.cs-wide{grid-template-columns:minmax(0,1fr)}
+ .cs-pair .ms-individual-grid{padding:14px 12px 12px}
+ .cs-pair .ps-chart .zs-plotwrap{--zs-h:230px}
+ .cs-chead{flex-direction:column}
+ .cs-vp{text-align:left}
+ .cs-groups .cs-vp .ms-value-pair{justify-content:flex-start}
+}
+@media (max-width:600px){
+ .cs-pair .ps-chart .zs-x .lbf{display:none}
+ .cs-pair .ps-chart .zs-x .lbc{display:block}
+ .cs-pair .ps-chart .zs-x{font-size:11.5px;letter-spacing:-.02em;padding:6px 0 0}
+ .cs-pair .ps-result .ps-big{justify-content:flex-start;text-align:left}
+ .cs-pair .ps-big .ps-from,.cs-pair .ps-big .ps-to,.cs-pair .ps-big .ps-rel{align-items:flex-start}
+ .cs-pair .ps-big .ps-rel{border-left:0;padding-left:0;margin-left:0;flex-basis:100%}
+ .cs-pair .ps-big .ps-to b{font-size:44px}
+ .cs-pair .ps-big .ps-rel b{font-size:30px}
+}
+@media (prefers-reduced-motion:reduce){.cs-anch .cs-arrlab{transition:none!important}}
+
+/* ===== mechanism frame 2 (2026-11-13 r2): crops of the existing approved concept illustration
+   (cell-states-brown-20261113.png, pixels untouched; nested-svg viewport crop). No boxes; text/arrows on top.
+   Motion only inside .cs-js .is-on, so no-JS / reduced motion (which removes .cs-js and kills animations) shows
+   the complete static frame. Overlay particles are decorative and stay hidden without motion. */
+.cs-svg-ill{border-color:transparent;background:#fff}
+.cs-halo{paint-order:stroke;stroke:#fff;stroke-width:4px;stroke-linejoin:round}
+.cs-lab-xs{font-size:13px;fill:var(--cs-sub)}
+.cs-m2-sasp{font-weight:700;letter-spacing:.06em;fill:#4a3424}
+.cs-m2-p circle{opacity:0}
+.cs-js .cs-scene.is-on .cs-m2-r{animation:csFade2 .9s .2s ease both}
+.cs-js .cs-scene.is-on .cs-m2-p circle{animation:csM2p 2.6s 1.2s ease-in-out infinite}
+.cs-js .cs-scene.is-on .cs-m2-p .cs-m2-d2{animation-delay:1.6s}
+.cs-js .cs-scene.is-on .cs-m2-p .cs-m2-d3{animation-delay:2s}
+.cs-js .cs-scene.is-on .cs-m2-sasp{animation:csFade2 .6s 1.3s ease both}
+.cs-js .cs-scene.is-on .cs-m2-fb,.cs-js .cs-scene.is-on .cs-m2-fbl{animation:csFade2 .8s 2.4s ease both}
+.cs-js .cs-scene.is-on .cs-m2-wave{animation:csM2w 2.4s ease-in-out infinite}
+@keyframes csM2p{0%,100%{opacity:0}40%,60%{opacity:.85}}
+@keyframes csM2w{0%,100%{opacity:.45}50%{opacity:.9}}
+/* optional SASP concept clip under the chapter-2 player (collapsed by default) */
+.cs-vid{margin:18px 0 0;background:var(--cs-beige);border-radius:3px}
+.cs-vid>summary{cursor:pointer;list-style:none;padding:11px 16px;font-size:14px;letter-spacing:.04em;color:var(--cs-ink)}
+.cs-vid>summary::-webkit-details-marker{display:none}
+.cs-vid>summary::before{content:"▸";display:inline-block;margin-right:.6em;color:var(--cs-brown);transition:transform .2s}
+.cs-vid[open]>summary::before{transform:rotate(90deg)}
+.cs-vid>summary:focus-visible{outline:1px solid var(--cs-ink);outline-offset:2px}
+.cs-vid-fig{margin:0;padding:0 16px 14px}
+.cs-vid-fig video{display:block;width:100%;height:auto;background:var(--cs-paper)}
+.cs-vid-fig figcaption{font-size:13px;line-height:1.7;color:var(--cs-sub);margin-top:8px}
+@media (prefers-reduced-motion:reduce){.cs-vid>summary::before{transition:none}}
