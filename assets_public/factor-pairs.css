@@ -53,8 +53,45 @@
 .fp-on .fp-bar{animation:fp-grow .9s cubic-bezier(.2,.7,.2,1) both;animation-delay:calc(var(--fp-i) * 90ms)}
 .fp-on .fp-v{animation:fp-fade .6s ease both;animation-delay:calc(var(--fp-i) * 90ms + .6s)}
 .fp-on .fp-draw:not([stroke-dasharray]){stroke-dasharray:260;animation:fp-draw 1.4s ease both}
+/* F3 / CD142 wide chart (build -4): the first pair keeps its role diagram (left) and gets a wider right column with
+   one larger VERTICAL column chart: columns high -> low, 柳葉会 rightmost (lowest), names below each column, zero
+   baseline, ticks 0-10, dashed line at the 柳葉会 value, headline + large 柳葉会 value at the top right. */
+.fp-pair[data-fp-wide]{grid-template-columns:minmax(0,5fr) minmax(0,9fr)}
+.fp-chart-wide{padding:22px clamp(14px,2.4vw,26px) 16px}
+.fp-whead{display:flex;justify-content:space-between;align-items:flex-start;gap:12px 28px;margin:6px 0 10px}
+.fp-wh{flex:1 1 12em;min-width:0;margin:0;font-family:"Hiragino Mincho ProN","Noto Serif JP","Songti SC",Georgia,serif;font-weight:500;font-size:clamp(20px,2.3vw,27px);line-height:1.4}
+.fp-wh>span{display:inline-block}
+.fp-key{flex:0 0 auto;margin:0;display:flex;flex-direction:column;align-items:flex-end;gap:4px;text-align:right;padding-left:18px;border-left:1px solid var(--fp-gold)}
+.fp-key-n{font:650 13px/1.3 ui-sans-serif,system-ui,"Hiragino Sans","PingFang SC",sans-serif;letter-spacing:.12em;color:var(--fp-sub)}
+.fp-key-v{font-family:"Hiragino Mincho ProN","Noto Serif JP","Songti SC",Georgia,serif;font-weight:500;font-size:clamp(44px,6vw,76px);line-height:1;font-variant-numeric:tabular-nums;color:var(--fp-ink)}
+.fp-key-u{font:500 11.5px/1.3 ui-monospace,SFMono-Regular,Menlo,monospace;color:var(--fp-sub)}
+.fp-chart-wide .fp-plot{height:390px}
+.fp-chart-wide .fp-tick{width:36px}
+.fp-chart-wide .fp-tick-max{bottom:calc(64px + 280px - 5px)}
+.fp-chart-wide .fp-tick[style]{bottom:calc(64px + 280px * var(--fp-h) - 5px)}
+.fp-chart-wide .fp-bars{left:44px;height:366px;background:linear-gradient(var(--fp-hair),var(--fp-hair)) 0 calc(100% - 64px - 280px)/100% 1px no-repeat}
+.fp-chart-wide .fp-bar{left:22%;right:22%;height:calc(280px * var(--fp-h))}
+.fp-chart-wide .fp-v{bottom:calc(64px + 280px * var(--fp-h) + 6px);font-size:14px}
+.fp-chart-wide .fp-focus .fp-v{font-weight:800}
+.fp-chart-wide .fp-x{font-size:12.5px}
+.fp-grid,.fp-refl{position:absolute;left:44px;right:0;bottom:calc(64px + 280px * var(--fp-h));pointer-events:none}
+.fp-grid{border-top:1px solid #efe9de}
+.fp-refl{border-top:1.5px dashed var(--fp-gold)}
+.fp-ord{position:absolute;right:0;top:0;font:500 10.5px/1 ui-sans-serif,system-ui,"Hiragino Sans","PingFang SC",sans-serif;letter-spacing:.04em;color:var(--fp-sub)}
 @media (max-width:900px){
   .fp-pair{grid-template-columns:1fr}
+  .fp-pair[data-fp-wide]{grid-template-columns:1fr}
+}
+@media (max-width:560px){
+  .fp-whead{gap:10px 12px}
+  .fp-wh{flex-basis:8em;font-size:18px}
+  .fp-key{max-width:9.5em;padding-left:12px}
+  .fp-key-v{font-size:40px}
+  .fp-key-u{font-size:10px}
+  .fp-chart-wide .fp-bars,.fp-grid,.fp-refl{left:34px}
+  .fp-chart-wide .fp-tick{width:28px}
+  .fp-chart-wide .fp-v{font-size:11.5px}
+  .fp-chart-wide .fp-x{font-size:10.5px}
 }
 @media (max-width:420px){
   .fp-chart{padding:14px 8px 10px}
